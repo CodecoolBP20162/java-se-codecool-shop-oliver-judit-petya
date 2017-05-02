@@ -27,7 +27,7 @@ public class ProductController {
         Map params = new HashMap<>();
         params.put("categories", productCategoryDataStore.getAll());
         params.put("suppliers", productSupplierDataStore.getAll());
-        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+        params.put("products", productDataStore.getAll());
         return new ModelAndView(params, "product/index");
     }
 
