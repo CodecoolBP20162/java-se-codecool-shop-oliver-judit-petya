@@ -1,17 +1,15 @@
 package com.codecool.shop.dao.implementation;
 
-
 import com.codecool.shop.dao.OrderDao;
-import com.codecool.shop.model.LineItem;
+import com.codecool.shop.model.Order;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class OrderDaoMem implements OrderDao{
 
-    private List<LineItem> items = new ArrayList<>();
-    private float orderPrice;
-    private int orderQuantity;
+    private List<Order> DATA = new ArrayList<>();
     private static OrderDaoMem instance = null;
 
     /* A private Constructor prevents any other class from instantiating.
@@ -26,30 +24,24 @@ public class OrderDaoMem implements OrderDao{
         return instance;
     }
 
-    public void addLineItem(LineItem item){
-        items.add(item);
-        updateOrderPrice(item);
-        updateOrderQuantity(item);
+    @Override
+    public List<Order> getAll() {
+        return DATA;
     }
 
-    public void updateOrderPrice(LineItem item){
-        this.orderPrice += item.totalPrice;
+    @Override
+    public void add(Order order) {
+        order.setId(DATA.size() + 1);
+        DATA.add(order);
     }
 
-    public void updateOrderQuantity(LineItem item){
-        this.orderQuantity += item.quantity;
+    @Override
+    public Order find(int id) {
+        return DATA.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
     }
 
-    public float getOrderPrice() {
-        return orderPrice;
+    @Override
+    public void remove(int id) {
+        DATA.remove(find(id));
     }
-
-    public int getOrderQuantity() {
-        return orderQuantity;
-    }
-
-    public List<LineItem> getItems() {
-        return items;
-    }
-
 }
