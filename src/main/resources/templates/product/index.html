@@ -36,13 +36,31 @@
 </div>
 
 <div class="container">
-    <div class="well well-sm">
-        <strong th:text="${category.name}">Category Title</strong>
+
+    <div class="row">
+        <div class=" filter-col col-lg-2">
+            <div class="dropdown">
+                <button class="filter-btn btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Categories
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li  th:each="cat : ${categories}"><a th:href="@{~/category/{path}(path=${cat.id})}"><strong th:text="${cat.name}">Category Title</strong></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="filter-col col-lg-2">
+            <div class="dropdown">
+                <button class="filter-btn btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Suppliers
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li  th:each="sup : ${suppliers}"><a th:href="@{~/supplier/{path}(path=${sup.id})}"><strong th:text="${sup.name}">Category Title</strong></a></li>
+                </ul>
+            </div>
+        </div>
     </div>
-
+    
     <div id="products" class="row list-group">
-
-        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${products}">
+    <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${products}">
             <div class="thumbnail">
                 <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/img/product_' + ${prod.id} + '.jpg'" alt="" />
                 <div class="caption">
