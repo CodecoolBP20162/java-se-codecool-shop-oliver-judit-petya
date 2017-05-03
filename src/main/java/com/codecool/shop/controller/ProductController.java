@@ -1,8 +1,10 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
@@ -20,11 +22,15 @@ import java.util.Map;
 public class ProductController {
 
     public static ModelAndView renderProducts(Request req, Response res) {
+        req.session(true);
+
+        SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
+        OrderDao order = OrderDaoMem.getInstance();
 
         Map params = new HashMap<>();
+        params.put("orderQuantity", order.getOrderQuantity());
         params.put("categories", productCategoryDataStore.getAll());
         params.put("suppliers", productSupplierDataStore.getAll());
         params.put("products", productDataStore.getAll());
@@ -43,7 +49,6 @@ public class ProductController {
         return new ModelAndView(params, "product/index");
     }
 
-
     public static ModelAndView renderProductsbySupplier(Request req, Response res, int supplierID) {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
@@ -55,5 +60,4 @@ public class ProductController {
         params.put("products", productDataStore.getBy(productSupplierDataStore.find(supplierID)));
         return new ModelAndView(params, "product/index");
     }
-
 }
