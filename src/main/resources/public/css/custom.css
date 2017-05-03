@@ -1,6 +1,8 @@
 .glyphicon {
     margin-right:5px;
 }
+
+
 .thumbnail
 {
     margin-bottom: 20px;
@@ -59,4 +61,21 @@
 .list-group-item-text
 {
     margin: 0 0 11px;
+}
+
+.filter-btn {
+    width: 100%;
+    background-image: none !important;
+    background-color: #eee !important;
+    border-radius: 0px !important;
+    border: none !important;
+    color: darkgray;
+}
+
+.filter-btn:hover {
+    color: darkcyan;
+}
+
+.filter-col {
+    padding: 0;
 }
