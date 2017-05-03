@@ -22,15 +22,14 @@ import java.util.Map;
 public class ProductController {
 
     public static ModelAndView renderProducts(Request req, Response res) {
-        req.session(true);
-
         SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        OrderDao order = OrderDaoMem.getInstance();
+
+        req.session(true);
 
         Map params = new HashMap<>();
-        params.put("orderQuantity", order.getOrderQuantity());
+        params.put("orderQuantity", req.session().attribute("orderQuantity"));
         params.put("categories", productCategoryDataStore.getAll());
         params.put("suppliers", productSupplierDataStore.getAll());
         params.put("products", productDataStore.getAll());
@@ -41,8 +40,10 @@ public class ProductController {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        OrderDao order = OrderDaoMem.getInstance();
 
         Map params = new HashMap<>();
+        params.put("orderQuantity", req.session().attribute("orderQuantity"));
         params.put("categories", productCategoryDataStore.getAll());
         params.put("suppliers", productSupplierDataStore.getAll());
         params.put("products", productDataStore.getBy(productCategoryDataStore.find(categoryID)));
@@ -53,8 +54,10 @@ public class ProductController {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        OrderDao order = OrderDaoMem.getInstance();
 
         Map params = new HashMap<>();
+        params.put("orderQuantity", req.session().attribute("orderQuantity"));
         params.put("categories", productCategoryDataStore.getAll());
         params.put("suppliers", productSupplierDataStore.getAll());
         params.put("products", productDataStore.getBy(productSupplierDataStore.find(supplierID)));
