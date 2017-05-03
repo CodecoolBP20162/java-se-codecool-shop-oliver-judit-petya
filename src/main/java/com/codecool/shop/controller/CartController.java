@@ -22,7 +22,7 @@ public class CartController {
         req.session().attribute("orderNum", order.getOrderQuantity());
         req.session().attribute("orderPrice", order.getOrderPrice());
 
-        res.redirect("/");
+        res.body("/");
         return res;
     }
 }
