@@ -3,26 +3,43 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.LineItem;
-import com.codecool.shop.model.Product;
+import com.codecool.shop.model.Order;
 import spark.Request;
 import spark.Response;
 
 public class CartController {
 
-    public static OrderDaoMem order = OrderDaoMem.getInstance();
+    public static OrderDaoMem orderList = OrderDaoMem.getInstance();
 
-    public static Response addToCart(Request req, Response res) {
+    private static void updateSession(Request req, Order currentOrder){
+        req.session().attribute("orderQuantity", currentOrder.getOrderQuantity());
+        req.session().attribute("orderPrice", currentOrder.getOrderPrice());
+    }
+
+    private static LineItem returnLineItemFromReq(Request req){
         String productIdStr = req.queryParams("prod_id");
         int productIdInt = Integer.parseInt(productIdStr);
-        Product selectedProduct = ProductDaoMem.getInstance().find(productIdInt);
+        return new LineItem(ProductDaoMem.getInstance().find(productIdInt));
+    }
 
-        LineItem actualItem = new LineItem(selectedProduct);
-        order.addLineItem(actualItem);
+    private static Order findCurrentOrder(Request req){
+        Order currentOrder = new Order();
+        if (!req.session().attributes().contains("orderId")) {
+            orderList.add(currentOrder);
+            req.session().attribute("orderId", currentOrder.getId());
+        } else {
+            int orderId = req.session().attribute("orderId");
+            currentOrder = orderList.find(orderId);
+        }
+        return currentOrder;
+    }
 
-        req.session().attribute("orderNum", order.getOrderQuantity());
-        req.session().attribute("orderPrice", order.getOrderPrice());
-
-        res.body("/");
+    public static Response addToCart(Request req, Response res) {
+        LineItem selectedItem = returnLineItemFromReq(req);
+        Order currentOrder = findCurrentOrder(req);
+        currentOrder.addLineItem(selectedItem);
+        updateSession(req, currentOrder);
+        res.redirect("/");
         return res;
     }
 }
