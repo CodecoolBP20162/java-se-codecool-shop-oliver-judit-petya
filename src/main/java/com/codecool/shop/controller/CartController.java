@@ -1,7 +1,5 @@
 package com.codecool.shop.controller;
 
-
-import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.LineItem;
@@ -20,6 +18,9 @@ public class CartController {
 
         LineItem actualItem = new LineItem(selectedProduct);
         order.addLineItem(actualItem);
+
+        req.session().attribute("orderNum", order.getOrderQuantity());
+        req.session().attribute("orderPrice", order.getOrderPrice());
 
         res.redirect("/");
         return res;
