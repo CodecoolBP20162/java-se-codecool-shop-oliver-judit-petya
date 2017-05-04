@@ -11,17 +11,28 @@ public class Order {
     private int orderQuantity;
     private int id;
 
-    public void addLineItem(LineItem item){
-        items.add(item);
-        updateOrderPrice(item);
-        updateOrderQuantity(item);
+    public void addLineItem(LineItem item) {
+        int counter = 0;
+        for (LineItem n : items) {
+            if (n.product.equals(item.product)) {
+                n.quantity += 1;
+                updateOrderPrice(item);
+                updateOrderQuantity(item);
+                counter += 1;
+            }
+        }
+        if (counter == 0) {
+            items.add(item);
+            updateOrderPrice(item);
+            updateOrderQuantity(item);
+        }
     }
 
-    public void updateOrderPrice(LineItem item){
+    public void updateOrderPrice(LineItem item) {
         this.orderPrice += item.totalPrice;
     }
 
-    public void updateOrderQuantity(LineItem item){
+    public void updateOrderQuantity(LineItem item) {
         this.orderQuantity += item.quantity;
     }
 
@@ -38,6 +49,10 @@ public class Order {
         this.id = id;
     }
 
+    public List<LineItem> getItems() {
+        return items;
+    }
+      
     public int getId() {
         return id;
     }
