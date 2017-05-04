@@ -4,6 +4,7 @@ import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.LineItem;
 import com.codecool.shop.model.Order;
+import org.json.simple.JSONObject;
 import spark.Request;
 import spark.Response;
 
@@ -17,7 +18,8 @@ public class CartController {
     }
 
     private static LineItem returnLineItemFromReq(Request req){
-        String productIdStr = req.queryParams("prod_id");
+        String productIdStr = req.queryParams("prodID");
+        System.out.println(productIdStr);
         int productIdInt = Integer.parseInt(productIdStr);
         return new LineItem(ProductDaoMem.getInstance().find(productIdInt));
     }
@@ -34,12 +36,15 @@ public class CartController {
         return currentOrder;
     }
 
-    public static Response addToCart(Request req, Response res) {
+    public static JSONObject addToCart(Request req, Response res) {
+        System.out.println();
         LineItem selectedItem = returnLineItemFromReq(req);
         Order currentOrder = findCurrentOrder(req);
         currentOrder.addLineItem(selectedItem);
         updateSession(req, currentOrder);
-        res.redirect("/");
-        return res;
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("numOfLineItems", currentOrder.getOrderQuantity());
+        res.type("application/json");
+        return jsonObj;
     }
 }
