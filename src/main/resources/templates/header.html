@@ -1,0 +1,28 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<body>
+
+<div th:fragment="navbar">
+    <div class="row">
+        <div class="col-sm-12">
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="/">JB shop</a>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <button type="button" class="btn btn-default navbar-btn" id="cart_button">
+                                <span class="glyphicon glyphicon-shopping-cart"></span>
+                                <div id="order-quantity" th:text="${orderQuantity}"></div>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
