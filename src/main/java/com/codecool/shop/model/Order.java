@@ -44,16 +44,15 @@ public class Order {
         return orderQuantity;
     }
 
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public List<LineItem> getItems() {
         return items;
     }
-      
+
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
