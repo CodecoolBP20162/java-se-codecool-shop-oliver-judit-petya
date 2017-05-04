@@ -17,4 +17,12 @@ public class LineItem {
         this.quantity = quantity;
         this.totalPrice = quantity * product.getDefaultPrice();
     }
+
+    public String getName(){
+        return this.product.getName();
+    }
+
+    public int getQuantity(){
+        return this.quantity;
+    }
 }

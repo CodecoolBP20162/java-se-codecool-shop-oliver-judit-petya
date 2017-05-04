@@ -8,15 +8,14 @@ import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.Supplier;
+import com.codecool.shop.model.*;
 
 import spark.Request;
 import spark.Response;
 import spark.ModelAndView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ProductController {
@@ -62,5 +61,28 @@ public class ProductController {
         params.put("suppliers", productSupplierDataStore.getAll());
         params.put("products", productDataStore.getBy(productSupplierDataStore.find(supplierID)));
         return new ModelAndView(params, "product/index");
+    }
+
+    public static ModelAndView renderShoppingCart(Request req, Response res) {
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        OrderDao order = OrderDaoMem.getInstance();
+        Order cart = order.find(0);
+        List<LineItem> cartItems = cart.getAll();
+
+        Map params = new HashMap<>();
+        params.put("cartItems", cartItems);
+        return new ModelAndView(params, "product/shopping_cart");
+    }
+
+    public static ModelAndView renderEditCart(Request req, Response res) {
+        OrderDao order = OrderDaoMem.getInstance();
+        Order cart = order.find(0);
+        List<LineItem> cartItems = cart.getAll();
+
+        Map params = new HashMap<>();
+        params.put("cartItems", cartItems);
+        return new ModelAndView(params, "product/shopping_cart");
     }
 }

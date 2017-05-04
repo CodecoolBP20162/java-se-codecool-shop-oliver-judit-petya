@@ -41,4 +41,8 @@ public class Order {
     public int getId() {
         return id;
     }
+
+    public List<LineItem> getAll() {
+        return items;
+    }
 }
