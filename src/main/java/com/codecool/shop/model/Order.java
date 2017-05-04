@@ -51,6 +51,7 @@ public class Order {
 
     public List<LineItem> getItems() {
         return items;
+    }
       
     public int getId() {
         return id;
