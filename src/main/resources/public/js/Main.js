@@ -10,6 +10,7 @@ $(document).ready(function () {
             success: function (resp) {
                 var obj = resp["numOfLineItems"];
                 $("#order-quantity").html(obj);
+                document.getElementById("quantity_input" + prodId).value = "";
             },
             error: function () {
                 alert('Problem with add-to-cart function')
