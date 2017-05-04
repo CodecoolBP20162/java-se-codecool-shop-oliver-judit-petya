@@ -11,17 +11,17 @@ public class Order {
     private int orderQuantity;
     private int id;
 
-    public void addLineItem(LineItem item){
+    public void addLineItem(LineItem item) {
         items.add(item);
         updateOrderPrice(item);
         updateOrderQuantity(item);
     }
 
-    public void updateOrderPrice(LineItem item){
+    public void updateOrderPrice(LineItem item) {
         this.orderPrice += item.totalPrice;
     }
 
-    public void updateOrderQuantity(LineItem item){
+    public void updateOrderQuantity(LineItem item) {
         this.orderQuantity += item.quantity;
     }
 
@@ -33,12 +33,11 @@ public class Order {
         return orderQuantity;
     }
 
+    public int getId() {
+        return id;
+    }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getId() {
-        return id;
     }
 }

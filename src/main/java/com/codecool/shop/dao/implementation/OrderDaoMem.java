@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class OrderDaoMem implements OrderDao{
+public class OrderDaoMem implements OrderDao {
 
-    private List<Order> DATA = new ArrayList<>();
     private static OrderDaoMem instance = null;
+    private List<Order> DATA = new ArrayList<>();
 
     /* A private Constructor prevents any other class from instantiating.
      */
-    private OrderDaoMem(){
+    private OrderDaoMem() {
     }
 
     public static OrderDaoMem getInstance() {
