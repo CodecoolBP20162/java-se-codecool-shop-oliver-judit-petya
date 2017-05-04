@@ -1,22 +1,19 @@
 $(document).ready(function() {
-    alert("JS IN DOM - OK");
     $(".add-to-cart-btn").click(function() {
-        console.log($(this).attr("value"));
         var prodID = $(this).attr("value");
         $.ajax({
-            url: "/add_to_cart/"+prodID,
+            url: "/add_to_cart",
             type: "POST",
             async: true,
-            data: {, success: "ok", prodId:prodID},
+            data: { success: "ok", prodID:prodID},
             success:
-                function (data) {
-                alert("in success")
-                    var obj = JSON.parse(JSON.stringify(data));
+                function (resp) {
+                    var obj = resp["numOfLineItems"];
                     $("#order-quantity").html(obj);
                 },
             error:
                 function () {
-                    alert('Get all boards not OK')
+                    alert('Problem with add-to-cart function')
                 }
         });
     });

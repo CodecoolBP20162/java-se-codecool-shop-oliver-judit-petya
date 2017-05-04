@@ -18,7 +18,8 @@ public class CartController {
     }
 
     private static LineItem returnLineItemFromReq(Request req){
-        String productIdStr = req.queryParams("prod_id");
+        String productIdStr = req.queryParams("prodID");
+        System.out.println(productIdStr);
         int productIdInt = Integer.parseInt(productIdStr);
         return new LineItem(ProductDaoMem.getInstance().find(productIdInt));
     }
@@ -36,8 +37,7 @@ public class CartController {
     }
 
     public static JSONObject addToCart(Request req, Response res) {
-        String productIdStr = req.queryParams("prodID");
-        System.out.println(productIdStr);
+        System.out.println();
         LineItem selectedItem = returnLineItemFromReq(req);
         Order currentOrder = findCurrentOrder(req);
         currentOrder.addLineItem(selectedItem);
