@@ -4,7 +4,6 @@ import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.LineItem;
 import com.codecool.shop.model.Order;
-import com.codecool.shop.model.Product;
 import org.json.simple.JSONObject;
 import spark.Request;
 import spark.Response;
