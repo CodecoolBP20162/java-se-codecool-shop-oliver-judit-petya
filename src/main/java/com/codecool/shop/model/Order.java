@@ -12,9 +12,20 @@ public class Order {
     private int id;
 
     public void addLineItem(LineItem item) {
-        items.add(item);
-        updateOrderPrice(item);
-        updateOrderQuantity(item);
+        int counter = 0;
+        for (LineItem n : items) {
+            if (n.product.equals(item.product)) {
+                n.quantity += 1;
+                updateOrderPrice(item);
+                updateOrderQuantity(item);
+                counter += 1;
+            }
+        }
+        if (counter == 0) {
+            items.add(item);
+            updateOrderPrice(item);
+            updateOrderQuantity(item);
+        }
     }
 
     public void updateOrderPrice(LineItem item) {
@@ -39,5 +50,9 @@ public class Order {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<LineItem> getItems() {
+        return items;
     }
 }

@@ -4,6 +4,7 @@ import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.LineItem;
 import com.codecool.shop.model.Order;
+import com.codecool.shop.model.Product;
 import org.json.simple.JSONObject;
 import spark.Request;
 import spark.Response;
@@ -40,10 +41,13 @@ public class OrderController {
         Order currentOrder = findCurrentOrder(req);
         currentOrder.addLineItem(selectedItem);
         updateSession(req, currentOrder);
-
         JSONObject jsonObj = new JSONObject();
         jsonObj.put("numOfLineItems", currentOrder.getOrderQuantity());
         res.type("application/json");
+        for(LineItem n:currentOrder.getItems()){
+            System.out.println(n.product);
+        }
+        System.out.println(currentOrder.getItems());
         return jsonObj;
     }
 }
