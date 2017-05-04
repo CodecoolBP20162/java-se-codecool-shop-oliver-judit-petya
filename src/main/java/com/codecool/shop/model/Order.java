@@ -29,7 +29,7 @@ public class Order {
     }
 
     public void updateOrderPrice(LineItem item) {
-        this.orderPrice += item.totalPrice;
+        this.orderPrice += item.getTotalPrice();
     }
 
     public void updateOrderQuantity(LineItem item) {
