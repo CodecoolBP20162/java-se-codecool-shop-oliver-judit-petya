@@ -10,10 +10,10 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <button type="button" class="btn btn-default navbar-btn" id="cart_button">
+                    <form action="/cart"><button type="submit" class="btn btn-default navbar-btn" id="cart_button">
                     <span class="glyphicon glyphicon-shopping-cart"></span>
                         <p th:text="${orderQuantity}"></p>
-                    </button>
+                    </button></form>
                 </li>
             </ul>
         </div>
