@@ -8,59 +8,44 @@ import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.Supplier;
-
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import spark.ModelAndView;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ProductController {
+    private static SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
+    private static ProductDao productDataStore = ProductDaoMem.getInstance();
+    private static ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+    private static OrderDao order = OrderDaoMem.getInstance();
 
     public static ModelAndView renderProducts(Request req, Response res) {
-        SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-
         req.session(true);
 
-        Map params = new HashMap<>();
-        params.put("orderQuantity", req.session().attribute("orderQuantity"));
-        params.put("categories", productCategoryDataStore.getAll());
-        params.put("suppliers", productSupplierDataStore.getAll());
-        params.put("products", productDataStore.getAll());
-        return new ModelAndView(params, "product/index");
+        Map indexRenderParams = paramFiller(req, productCategoryDataStore, productSupplierDataStore);
+        indexRenderParams.put("products", productDataStore.getAll());
+        return new ModelAndView(indexRenderParams, "product/index");
     }
 
     public static ModelAndView renderProductsbyCategory(Request req, Response res, int categoryID) {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        OrderDao order = OrderDaoMem.getInstance();
-
-        Map params = new HashMap<>();
-        params.put("orderQuantity", req.session().attribute("orderQuantity"));
-        params.put("categories", productCategoryDataStore.getAll());
-        params.put("suppliers", productSupplierDataStore.getAll());
-        params.put("products", productDataStore.getBy(productCategoryDataStore.find(categoryID)));
-        return new ModelAndView(params, "product/index");
+        Map categoryRenderParams = paramFiller(req, productCategoryDataStore, productSupplierDataStore);
+        categoryRenderParams.put("products", productDataStore.getBy(productCategoryDataStore.find(categoryID)));
+        return new ModelAndView(categoryRenderParams, "product/index");
     }
 
     public static ModelAndView renderProductsbySupplier(Request req, Response res, int supplierID) {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        OrderDao order = OrderDaoMem.getInstance();
+        Map supRenderParams = paramFiller(req, productCategoryDataStore, productSupplierDataStore);
+        supRenderParams.put("products", productDataStore.getBy(productSupplierDataStore.find(supplierID)));
+        return new ModelAndView(supRenderParams, "product/index");
+    }
 
+    public static Map paramFiller(Request req, ProductCategoryDao productCategoryDataStore, SupplierDao productSupplierDataStore) {
         Map params = new HashMap<>();
         params.put("orderQuantity", req.session().attribute("orderQuantity"));
         params.put("categories", productCategoryDataStore.getAll());
         params.put("suppliers", productSupplierDataStore.getAll());
-        params.put("products", productDataStore.getBy(productSupplierDataStore.find(supplierID)));
-        return new ModelAndView(params, "product/index");
+        return params;
     }
 }

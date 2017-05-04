@@ -12,19 +12,19 @@ public class CartController {
 
     public static OrderDaoMem orderList = OrderDaoMem.getInstance();
 
-    private static void updateSession(Request req, Order currentOrder){
+    private static void updateSession(Request req, Order currentOrder) {
         req.session().attribute("orderQuantity", currentOrder.getOrderQuantity());
         req.session().attribute("orderPrice", currentOrder.getOrderPrice());
     }
 
-    private static LineItem returnLineItemFromReq(Request req){
+    private static LineItem returnLineItemFromReq(Request req) {
         String productIdStr = req.queryParams("prodID");
         System.out.println(productIdStr);
         int productIdInt = Integer.parseInt(productIdStr);
         return new LineItem(ProductDaoMem.getInstance().find(productIdInt));
     }
 
-    private static Order findCurrentOrder(Request req){
+    private static Order findCurrentOrder(Request req) {
         Order currentOrder = new Order();
         if (!req.session().attributes().contains("orderId")) {
             orderList.add(currentOrder);

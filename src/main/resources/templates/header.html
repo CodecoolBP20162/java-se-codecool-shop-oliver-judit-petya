@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <body>
 
 <div th:fragment="navbar">
@@ -11,7 +11,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <button type="button" class="btn btn-default navbar-btn" id="cart_button">
-                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                        <span class="glyphicon glyphicon-shopping-cart"></span>
                         <p id="order-quantity" th:text="${orderQuantity}"></p>
                     </button>
                 </li>
