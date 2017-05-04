@@ -44,9 +44,6 @@ public class Order {
         return orderQuantity;
     }
 
-    public int getId() {
-        return id;
-    }
 
     public void setId(int id) {
         this.id = id;
@@ -54,5 +51,8 @@ public class Order {
 
     public List<LineItem> getItems() {
         return items;
+      
+    public int getId() {
+        return id;
     }
 }

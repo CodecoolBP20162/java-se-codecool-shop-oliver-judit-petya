@@ -20,8 +20,10 @@ public class OrderController {
 
     private static LineItem returnLineItemFromReq(Request req) {
         String productIdStr = req.queryParams("prodId");
+        String productQuantityStr = req.queryParams("quantity");
+        int productQuantityInt = Integer.parseInt(productQuantityStr);
         int productIdInt = Integer.parseInt(productIdStr);
-        return new LineItem(ProductDaoMem.getInstance().find(productIdInt));
+        return new LineItem(ProductDaoMem.getInstance().find(productIdInt), productQuantityInt);
     }
 
     private static Order findCurrentOrder(Request req) {
