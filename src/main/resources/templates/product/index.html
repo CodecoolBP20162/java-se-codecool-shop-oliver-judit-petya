@@ -76,10 +76,12 @@
                         <div class="col-xs-12 col-md-6">
                             <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                         </div>
-                        <div class="col-xs-12 col-md-6">
-                            <button class="btn btn-success add-to-cart-btn" type="button" th:value="${prod.id}">ADD TO
-                                CART
+                        <div class="order_quantity">
+                            <input type="number" class="cls_quantity" name="quantity" th:id="'quantity_input' + ${prod.id}" min="1"></input>
+                            <button class="btn btn-success add-to-cart-btn" type="submit" th:value="${prod.id}">ADD TO
+                                    CART
                             </button>
+
                         </div>
                     </div>
                 </div>

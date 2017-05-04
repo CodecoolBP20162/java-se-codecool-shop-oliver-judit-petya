@@ -82,3 +82,13 @@
 #cart_button {
     margin-right: 10px;
 }
+
+.order_quantity, .cls_quantity, .add-to-cart-btn{
+    display: inline-block;
+}
+
+.cls_quantity {
+    height: 100%;
+    margin-left: 10px;
+    width: 20%;
+}
