@@ -46,10 +46,6 @@ public class OrderController {
         JSONObject jsonObj = new JSONObject();
         jsonObj.put("numOfLineItems", currentOrder.getOrderQuantity());
         res.type("application/json");
-        for(LineItem n:currentOrder.getItems()){
-            System.out.println(n.product);
-        }
-        System.out.println(currentOrder.getItems());
         return jsonObj;
     }
 }
