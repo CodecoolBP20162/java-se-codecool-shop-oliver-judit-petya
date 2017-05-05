@@ -1,7 +1,5 @@
 package com.codecool.shop.model;
 
-
-import javax.sound.midi.Soundbank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,17 +14,16 @@ public class Order {
         int counter = 0;
         for (LineItem n : items) {
             if (n.product.equals(item.product)) {
-                n.quantity += 1;
-                updateOrderPrice(item);
-                updateOrderQuantity(item);
+                n.quantity += item.quantity;
+                n.totalPrice += item.totalPrice;
                 counter += 1;
             }
         }
         if (counter == 0) {
             items.add(item);
-            updateOrderPrice(item);
-            updateOrderQuantity(item);
         }
+        updateOrderPrice(item);
+        updateOrderQuantity(item);
     }
 
     public void updateOrderPrice(LineItem item) {
@@ -45,17 +42,15 @@ public class Order {
         return orderQuantity;
     }
 
-
-    public void setId(int id) {
-        this.id = id;
-        System.out.println(id);
-    }
-
     public List<LineItem> getItems() {
         return items;
     }
-      
+
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
