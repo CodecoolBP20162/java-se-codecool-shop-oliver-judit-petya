@@ -53,7 +53,7 @@ public class ProductController {
 
     public static ModelAndView renderShoppingCart(Request req, Response res) {
         Order cart = OrderController.findCurrentOrder(req);
-        List<LineItem> cartItems = cart.getAll();
+        List<LineItem> cartItems = cart.getItems();
 
         Map params = new HashMap<>();
         params.put("cartItems", cartItems);
@@ -63,7 +63,7 @@ public class ProductController {
 
     public static ModelAndView renderEditCart(Request req, Response res) {
         Order cart = OrderController.findCurrentOrder(req);
-        List<LineItem> cartItems = cart.getAll();
+        List<LineItem> cartItems = cart.getItems();
         for(LineItem cartItem : cartItems){
             if (Integer.toString(cartItem.getId()).equals(req.queryParams("cart-id"))){
                 cartItem.quantity = Integer.parseInt(req.queryParams("cart-quantity"));
