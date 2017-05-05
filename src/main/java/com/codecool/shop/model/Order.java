@@ -1,6 +1,7 @@
 package com.codecool.shop.model;
 
 
+import javax.sound.midi.Soundbank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class Order {
 
     public void setId(int id) {
         this.id = id;
+        System.out.println(id);
     }
 
     public List<LineItem> getItems() {
@@ -55,9 +57,5 @@ public class Order {
       
     public int getId() {
         return id;
-    }
-
-    public List<LineItem> getAll() {
-        return items;
     }
 }
