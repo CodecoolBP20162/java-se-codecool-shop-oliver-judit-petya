@@ -26,7 +26,7 @@
                 <span class="icon-bar"></span>
             </a>
             <div class="navbar-inner">
-                <a class="brand" href="index.html"><img src="/img/new.png"/>CodeCool Shop</a>
+                <a class="brand" th:href="@{~/}"><img src="/img/new.png"/>CodeCool Shop</a>
 
                 <ul id="topMenu" class="nav pull-right">
                     <li class=""><a href="contact.html">Contact</a></li>
@@ -70,10 +70,10 @@
                 <div class="well well-small"><a id="myCart" href="product_summary.html"><img src="/img/ico-cart.png" alt="cart"/> Items in your cart  <span class="badge badge-warning pull-right">$0.0</span></a></div></div>
             <div class="span9">
                 <ul class="breadcrumb">
-                    <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+                    <li><a th:href="@{~/}">Home</a> <span class="divider">/</span></li>
                     <li class="active"> SHOPPING CART</li>
                 </ul>
-                <h3>  SHOPPING CART [ <small> Item(s) </small>]<a href="products.html" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a></h3>
+                <h3>  SHOPPING CART [ <small id="smallQuantity" th:text="${orderQuantity}+' Items(s)'"></small>]<a th:href="@{~/}" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a></h3>
                 <hr class="soft"/>
 
                 <table class="table table-bordered">
@@ -92,10 +92,10 @@
                             <td> <img width="60" src="themes/images/products/4.jpg" alt=""/></td>
                             <td th:text="${item.getName()}"></td>
                             <td>
-                                <div class="input-append"><input th:value="${item.getQuantity()}" class="span1" style="max-width:34px" placeholder="1" id="appendedInputButtons" size="16" type="text"/><button class="btn" type="button"><i class="icon-minus"></i></button><button class="btn" type="button"><i class="icon-plus"></i></button><button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button></div>
+                                <div class="input-append"><input th:value="${item.getQuantity()}" th:name="${item.getId()}" min="0" type="number" class="span1" style="max-width:34px" placeholder="0" id="appendedInputButtons" size="16"/><button class="btn" type="button"><i class="icon-minus"></i></button><button class="btn" type="button"><i class="icon-plus"></i></button><button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button></div>
                             </td>
                             <td></td>
-                            <td>$0.0</td>
+                            <td th:value="'$'+${item.totalPrice}"></td>
                         </tr>
                     </div>
                     <tr>
@@ -105,7 +105,7 @@
                     </tbody>
                 </table>
 
-                <a href="products.html" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
+                <a th:href="@{~/}" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
                 <a href="login.html" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
 
             </div>
@@ -129,7 +129,7 @@
 <!-- Latest compiled and minified Jquery -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-<script src="/js/script.js" type="text/javascript"></script>
+<script src="/js/ShoppingCart.js" type="text/javascript"></script>
 
 </body>
 </html>

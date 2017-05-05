@@ -4,7 +4,6 @@ import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.LineItem;
 import com.codecool.shop.model.Order;
-import com.codecool.shop.model.Product;
 import org.json.simple.JSONObject;
 import spark.Request;
 import spark.Response;
@@ -26,7 +25,7 @@ public class OrderController {
         return new LineItem(ProductDaoMem.getInstance().find(productIdInt), productQuantityInt);
     }
 
-    private static Order findCurrentOrder(Request req) {
+    public static Order findCurrentOrder(Request req) {
         Order currentOrder = new Order();
         if (!req.session().attributes().contains("orderId")) {
             orderList.add(currentOrder);
