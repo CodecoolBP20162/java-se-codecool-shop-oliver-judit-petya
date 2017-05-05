@@ -52,23 +52,23 @@ public class ProductController {
     }
 
     public static ModelAndView renderShoppingCart(Request req, Response res) {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        OrderDao order = OrderDaoMem.getInstance();
-        Order cart = order.find(0);
+        Order cart = OrderController.findCurrentOrder(req);
         List<LineItem> cartItems = cart.getAll();
 
         Map params = new HashMap<>();
         params.put("cartItems", cartItems);
+        params.put("orderQuantity", req.session().attribute("orderQuantity"));
         return new ModelAndView(params, "product/shopping_cart");
     }
 
     public static ModelAndView renderEditCart(Request req, Response res) {
-        OrderDao order = OrderDaoMem.getInstance();
-        Order cart = order.find(0);
+        Order cart = OrderController.findCurrentOrder(req);
         List<LineItem> cartItems = cart.getAll();
-
+        for(LineItem cartItem : cartItems){
+            if (Integer.toString(cartItem.getId()).equals(req.queryParams("cart-id"))){
+                cartItem.quantity = Integer.parseInt(req.queryParams("cart-quantity"));
+            };
+        };
         Map params = new HashMap<>();
         params.put("cartItems", cartItems);
         return new ModelAndView(params, "product/shopping_cart");
