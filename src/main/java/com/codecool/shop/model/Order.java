@@ -15,21 +15,20 @@ public class Order {
         int counter = 0;
         for (LineItem n : items) {
             if (n.product.equals(item.product)) {
-                n.quantity += 1;
-                updateOrderPrice(item);
-                updateOrderQuantity(item);
+                n.quantity += item.quantity;
+                n.totalPrice += item.totalPrice;
                 counter += 1;
             }
         }
         if (counter == 0) {
             items.add(item);
-            updateOrderPrice(item);
-            updateOrderQuantity(item);
         }
+        updateOrderPrice(item);
+        updateOrderQuantity(item);
     }
 
     public void updateOrderPrice(LineItem item) {
-        this.orderPrice += item.getTotalPrice();
+        this.orderPrice += item.totalPrice;
     }
 
     public void updateOrderQuantity(LineItem item) {
