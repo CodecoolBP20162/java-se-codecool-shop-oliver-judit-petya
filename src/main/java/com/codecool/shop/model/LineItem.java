@@ -2,9 +2,10 @@ package com.codecool.shop.model;
 
 
 public class LineItem {
-    public int quantity;
-    public float totalPrice;
+
     public Product product;
+    protected int quantity;
+    protected float totalPrice;
 
     public LineItem(Product product) {
         this.product = product;
@@ -16,5 +17,13 @@ public class LineItem {
         this.product = product;
         this.quantity = quantity;
         this.totalPrice = quantity * product.getDefaultPrice();
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public float getTotalPrice() {
+        return totalPrice;
     }
 }
