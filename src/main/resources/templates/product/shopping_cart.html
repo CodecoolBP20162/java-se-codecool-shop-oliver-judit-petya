@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="/css/base.css" />
     <link rel="stylesheet" type="text/css" href="/css/bootstrap-responsive.min.css" />
     <link rel="stylesheet" type="text/css" href="/css/font-awesome.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
 </head>
 <body>
@@ -67,13 +68,13 @@
         <div class="row">
             <!-- Sidebar ================================================== -->
             <div id="sidebar" class="span3">
-                <div class="well well-small"><a id="myCart" href="product_summary.html"><img src="/img/ico-cart.png" alt="cart"/> Items in your cart  <span class="badge badge-warning pull-right">$0.0</span></a></div></div>
+                <div class="well well-small"><a id="myCart" href="product_summary.html"><img src="/img/ico-cart.png" alt="cart"/> Items in your cart  <span th:text="'$ '+${sumTotalPrice}" class="badge badge-warning pull-right"></span></a></div></div>
             <div class="span9">
                 <ul class="breadcrumb">
                     <li><a th:href="@{~/}">Home</a> <span class="divider">/</span></li>
                     <li class="active"> SHOPPING CART</li>
                 </ul>
-                <h3>  SHOPPING CART [ <small id="smallQuantity" th:text="${orderQuantity}+' Items(s)'"></small>]<a th:href="@{~/}" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a></h3>
+                <h3>  SHOPPING CART <a th:href="@{~/}" class="btn btn-large pull-right"><i class="fa fa-chevron-left" aria-hidden="true"></i> Continue Shopping </a></h3>
                 <hr class="soft"/>
 
                 <table class="table table-bordered">
@@ -89,24 +90,24 @@
                     <tbody>
                     <div th:each="item:${cartItems}">
                         <tr>
-                            <td> <img width="60" src="themes/images/products/4.jpg" alt=""/></td>
+                            <td> <img width="60" th:attr="src='/img/product_'+${item.getId()}+'.jpg'" alt=""/></td>
                             <td th:text="${item.getName()}"></td>
                             <td>
-                                <div class="input-append"><input th:value="${item.getQuantity()}" th:name="${item.getId()}" min="0" type="number" class="span1" style="max-width:34px" placeholder="0" id="appendedInputButtons" size="16"/><button class="btn" type="button"><i class="icon-minus"></i></button><button class="btn" type="button"><i class="icon-plus"></i></button><button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button></div>
+                                <div class="input-append"><input th:value="${item.getQuantity()}" th:name="${item.getId()}" min="0" type="number" class="span1" style="max-width:34px" placeholder="0" id="appendedInputButtons" size="16"/><a th:href="@{~/delete_item/{path}(path=${item.id})}"><button class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button></a></div>
                             </td>
-                            <td></td>
-                            <td th:value="'$'+${item.totalPrice}"></td>
+                            <td th:text="'$ '+${item.product.getDefaultPrice()}"></td>
+                            <td th:text="'$ '+${item.getTotalPrice()}"></td>
                         </tr>
                     </div>
                     <tr>
                         <td colspan="6" style="text-align:right"><strong>TOTAL =</strong></td>
-                        <td class="label label-important" style="display:block"> <strong> $0.0 </strong></td>
+                        <td th:text="'$ '+${sumTotalPrice}" class="label label-important" style="display:block"><strong></strong></td>
                     </tr>
                     </tbody>
                 </table>
 
-                <a th:href="@{~/}" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
-                <a href="login.html" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
+                <a th:href="@{~/}" class="btn btn-large"><i class="fa fa-chevron-left" aria-hidden="true"></i> Continue Shopping </a>
+                <a href="login.html" class="btn btn-large pull-right">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
 
             </div>
         </div></div>
