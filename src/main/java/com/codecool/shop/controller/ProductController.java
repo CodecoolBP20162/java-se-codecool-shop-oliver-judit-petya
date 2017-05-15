@@ -57,6 +57,7 @@ public class ProductController {
 
         Map params = new HashMap<>();
         params.put("cartItems", cartItems);
+        params.put("sumTotalPrice", cart.sumTotalPrice());
         params.put("orderQuantity", req.session().attribute("orderQuantity"));
         return new ModelAndView(params, "product/shopping_cart");
     }
@@ -67,10 +68,32 @@ public class ProductController {
         for(LineItem cartItem : cartItems){
             if (Integer.toString(cartItem.getId()).equals(req.queryParams("cart-id"))){
                 cartItem.quantity = Integer.parseInt(req.queryParams("cart-quantity"));
+                // cart.addLineItem(cartItem);
+                cart.updateOrderPrice(cartItem);
+                cart.updateOrderQuantity(cartItem);
             };
         };
         Map params = new HashMap<>();
         params.put("cartItems", cartItems);
+        params.put("sumTotalPrice", cart.sumTotalPrice());
+        return renderShoppingCart(req, res);
+    }
+
+    public static ModelAndView renderDeleteItem(Request req, Response res) {
+        String itemID = req.params(":id");
+        Order cart = OrderController.findCurrentOrder(req);
+        List<LineItem> cartItems = cart.getItems();
+        for (LineItem cartItem : cartItems) {
+            //System.out.println(cartItem.getId());
+            if (itemID.equals(Integer.toString(cartItem.getId()))){
+                cart.deleteItem(cartItem);
+            }
+        }
+
+        Map params = new HashMap<>();
+        params.put("cartItems", cartItems);
+        params.put("sumTotalPrice", cart.sumTotalPrice());
+        params.put("orderQuantity", req.session().attribute("orderQuantity"));
         return new ModelAndView(params, "product/shopping_cart");
     }
 }
