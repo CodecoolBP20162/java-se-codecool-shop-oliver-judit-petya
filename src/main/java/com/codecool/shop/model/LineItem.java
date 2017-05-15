@@ -3,8 +3,8 @@ package com.codecool.shop.model;
 public class LineItem {
 
     public Product product;
-    protected int quantity;
-    protected float totalPrice;
+    public int quantity;
+    public float totalPrice;
 
     public LineItem(Product product) {
         this.product = product;
