@@ -52,6 +52,10 @@ public class Main {
         post("/editcart", (req, res) -> {
             return new ThymeleafTemplateEngine().render( ProductController.renderEditCart(req, res) );
         });
+
+        get("/delete_item/:id", (req, res) -> {
+            return new ThymeleafTemplateEngine().render( ProductController.renderDeleteItem(req, res) );
+        });
         // Add this line to your project to enable the debug screen
         enableDebugScreen();
     }
