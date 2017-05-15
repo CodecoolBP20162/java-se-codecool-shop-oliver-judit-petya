@@ -1,20 +1,20 @@
 DROP TABLE IF EXISTS ProductCategory, Product, Supplier;
 
 CREATE TABLE ProductCategory (
-  id INT PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   name VARCHAR(35),
   description VARCHAR(50),
   department VARCHAR(255)
 );
 
 CREATE TABLE Supplier (
-  id INT PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   name VARCHAR(35),
   description VARCHAR(255)
 );
 
 CREATE TABLE Product(
-  id INT PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   supplier_id INT,
   product_category_id INT,
   name VARCHAR(35),
