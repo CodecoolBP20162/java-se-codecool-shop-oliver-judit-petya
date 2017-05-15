@@ -3,10 +3,7 @@ import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoJdbc;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -59,17 +56,28 @@ public class Main {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
         SupplierDao supplierJdbc = SupplierDaoJdbc.getInstance();
+        ProductCategoryDao productCategoryJdbc = ProductCategoryDaoJDBC.getInstance();
+
 
 
         //setting up a new supplier
         Supplier amazon = new Supplier("Amazon", "Digital content and services");
         supplierDataStore.add(amazon);
-
-        supplierJdbc.add(amazon);
-        supplierJdbc.find(1);
-
         Supplier lenovo = new Supplier("Lenovo", "Computers");
         supplierDataStore.add(lenovo);
+
+        //SUPPLIER TABLE TESTS: please run init_db first, then delete /* and */
+/*
+        supplierJdbc.add(amazon);
+        supplierJdbc.add(lenovo);
+        System.out.println(supplierJdbc.find(1));
+        System.out.println(supplierJdbc.find(2));
+        System.out.println("All supplier in DB:\n" + supplierJdbc.getAll());
+        System.out.println("Remove Lenovo supplier from DB...");
+        supplierJdbc.remove(2);
+        System.out.println("All supplier in DB after remove Lenovo category:\n" + supplierJdbc.getAll());
+        System.out.println("______________________________________________________");
+        */
 
         //setting up a new product category
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
@@ -79,6 +87,20 @@ public class Main {
         productCategoryDataStore.add(phone);
         ProductCategory notebook = new ProductCategory("Notebook", "Hardware", "Like a tablet but with keyboard");
         productCategoryDataStore.add(notebook);
+
+        //PRODUCT CATEGORY TABLE TESTS: please run init_db first,then delete /* and */
+        /*
+        productCategoryJdbc.add(tablet);
+        productCategoryJdbc.add(phone);
+        productCategoryJdbc.add(notebook);
+        System.out.println(productCategoryJdbc.find(1));
+        System.out.println(productCategoryJdbc.find(2));
+        System.out.println(productCategoryJdbc.find(3));
+        System.out.println("All product category in DB:\n" + productCategoryJdbc.getAll());
+        System.out.println("Remove Notebook category from DB...");
+        productCategoryJdbc.remove(3);
+        System.out.println("All product category in DB after remove Notebook category:\n" + productCategoryJdbc.getAll());
+*/
 
         //setting up products and printing it
         productDataStore.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));

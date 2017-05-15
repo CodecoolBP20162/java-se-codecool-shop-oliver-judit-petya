@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS ProductCategory, Product, Supplier;
 CREATE TABLE ProductCategory (
   id SERIAL PRIMARY KEY,
   name VARCHAR(35),
-  description VARCHAR(50),
+  description VARCHAR(255),
   department VARCHAR(255)
 );
 

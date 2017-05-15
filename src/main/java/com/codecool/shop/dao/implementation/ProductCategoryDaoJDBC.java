@@ -1,16 +1,15 @@
 package com.codecool.shop.dao.implementation;
 
-
-import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.model.Supplier;
+import com.codecool.shop.dao.ProductCategoryDao;
+import com.codecool.shop.model.ProductCategory;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierDaoJdbc implements SupplierDao{
+public class ProductCategoryDaoJDBC implements ProductCategoryDao {
 
-    private static SupplierDaoJdbc instance = null;
+    private static ProductCategoryDaoJDBC instance = null;
 
     private String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
     private String DB_USER = "petya";
@@ -19,7 +18,7 @@ public class SupplierDaoJdbc implements SupplierDao{
     private PreparedStatement preparedStatement;
     private Connection dbConnection;
 
-    private SupplierDaoJdbc(){
+    private ProductCategoryDaoJDBC(){
         try {
             dbConnection = getConnection();
         } catch (SQLException e){
@@ -27,30 +26,31 @@ public class SupplierDaoJdbc implements SupplierDao{
         }
     }
 
-    public static SupplierDaoJdbc getInstance(){
+    public static ProductCategoryDaoJDBC getInstance(){
         if (instance == null) {
-            instance = new SupplierDaoJdbc();
+            instance = new ProductCategoryDaoJDBC();
         }
         return instance;
     }
 
-    public void add(Supplier supplier){
+    public void add(ProductCategory productCategory){
 
-        String insertIntoTable = "INSERT INTO Supplier (name, description) VALUES (?,?);";
+        String insertIntoTable = "INSERT INTO productcategory (name, description, department) VALUES (?,?,?);";
         try {
             preparedStatement = dbConnection.prepareStatement(insertIntoTable);
-            preparedStatement.setString(1, supplier.getName());
-            preparedStatement.setString(2, supplier.getDescription());
+            preparedStatement.setString(1, productCategory.getName());
+            preparedStatement.setString(2, productCategory.getDescription());
+            preparedStatement.setString(3, productCategory.getDepartment());
+
             preparedStatement.executeQuery();
         } catch (SQLException e){
             e.getStackTrace();
         }
     }
 
-    public Supplier find(int id){
+    public ProductCategory find(int id){
 
-
-        String query = "SELECT * FROM Supplier WHERE id = ?;";
+        String query = "SELECT * FROM ProductCategory WHERE id = ?;";
         try {
             preparedStatement = dbConnection.prepareStatement(query,
                     ResultSet.TYPE_FORWARD_ONLY,
@@ -59,11 +59,12 @@ public class SupplierDaoJdbc implements SupplierDao{
             preparedStatement.setInt(1,id);
             ResultSet result = preparedStatement.executeQuery();
             if(result.next()) {
-                Supplier supplier = new Supplier(
-                        result.getString    ("name"),
-                        result.getString    ("description"));
-                supplier.setId(result.getInt("id"));
-                return supplier;
+                ProductCategory productCategory = new ProductCategory(
+                result.getString    ("name"),
+                result.getString    ("description"),
+                result.getString("department"));
+                productCategory.setId(result.getInt("id"));
+                return productCategory;
             }
         } catch (SQLException e){
             e.printStackTrace();
@@ -72,7 +73,8 @@ public class SupplierDaoJdbc implements SupplierDao{
     }
 
     public void remove(int id){
-        String removeFromTable = "DELETE FROM supplier WHERE id = ?;";
+
+        String removeFromTable = "DELETE FROM ProductCategory WHERE id = ?;";
         try {
             preparedStatement = dbConnection.prepareStatement(removeFromTable);
             preparedStatement.setInt(1,id);
@@ -83,9 +85,10 @@ public class SupplierDaoJdbc implements SupplierDao{
 
     }
 
-    public List<Supplier> getAll(){
-        String query = "SELECT * FROM supplier";
-        List<Supplier> supplierList = new ArrayList<>();
+    public List<ProductCategory> getAll(){
+
+        String query = "SELECT * FROM ProductCategory";
+        List<ProductCategory> productCategoryList = new ArrayList<>();
         try {
             preparedStatement = dbConnection.prepareStatement(query,
                     ResultSet.TYPE_FORWARD_ONLY,
@@ -93,17 +96,19 @@ public class SupplierDaoJdbc implements SupplierDao{
                     ResultSet.CLOSE_CURSORS_AT_COMMIT);
             ResultSet result = preparedStatement.executeQuery();
             while(result.next()) {
-                Supplier supplier = new Supplier(
+                ProductCategory productCategory = new ProductCategory(
                         result.getString    ("name"),
-                        result.getString    ("description"));
-                supplier.setId(result.getInt("id"));
-                supplierList.add(supplier);
+                        result.getString    ("description"),
+                        result.getString("department"));
+                productCategory.setId(result.getInt("id"));
+                productCategoryList.add(productCategory);
             }
         } catch (SQLException e){
             e.printStackTrace();
         }
-        return supplierList;
+        return productCategoryList;
     }
+
 
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(
@@ -112,3 +117,5 @@ public class SupplierDaoJdbc implements SupplierDao{
                 DB_PASSWORD);
     }
 }
+
+
