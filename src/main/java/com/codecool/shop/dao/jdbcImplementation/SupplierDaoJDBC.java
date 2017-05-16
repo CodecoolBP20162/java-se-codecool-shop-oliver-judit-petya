@@ -1,4 +1,4 @@
-package com.codecool.shop.dao.implementation;
+package com.codecool.shop.dao.jdbcImplementation;
 
 
 import com.codecool.shop.dao.SupplierDao;
@@ -8,24 +8,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierDaoJDBC implements SupplierDao{
+public class SupplierDaoJDBC extends JDBCAbstractClass implements SupplierDao{
 
     private static SupplierDaoJDBC instance = null;
 
-    private String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private String DB_USER = "postgres";
-    private String DB_PASSWORD = "postgres";
-
-    private PreparedStatement preparedStatement;
-    private Connection dbConnection;
-
-    private SupplierDaoJDBC(){
-        try {
-            dbConnection = getConnection();
-        } catch (SQLException e){
-            e.getStackTrace();
-        }
-    }
+    private SupplierDaoJDBC(){}
 
     public static SupplierDaoJDBC getInstance(){
         if (instance == null) {
@@ -71,14 +58,7 @@ public class SupplierDaoJDBC implements SupplierDao{
     }
 
     public void remove(int id){
-        String removeFromTable = "DELETE FROM supplier WHERE id = ?;";
-        try {
-            preparedStatement = dbConnection.prepareStatement(removeFromTable);
-            preparedStatement.setInt(1,id);
-            preparedStatement.executeQuery();
-        } catch (Exception e){
-            e.getStackTrace();
-        }
+        remove(id, "supplier");
     }
 
     public List<Supplier> getAll(){
@@ -101,12 +81,5 @@ public class SupplierDaoJDBC implements SupplierDao{
             e.printStackTrace();
         }
         return supplierList;
-    }
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(
-                DATABASE,
-                DB_USER,
-                DB_PASSWORD);
     }
 }

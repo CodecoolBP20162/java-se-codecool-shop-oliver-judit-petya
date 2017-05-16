@@ -1,4 +1,4 @@
-package com.codecool.shop.dao.implementation;
+package com.codecool.shop.dao.jdbcImplementation;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.ProductCategory;
@@ -7,24 +7,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductCategoryDaoJDBC implements ProductCategoryDao {
+public class ProductCategoryDaoJDBC extends JDBCAbstractClass implements ProductCategoryDao{
 
     private static ProductCategoryDaoJDBC instance = null;
 
-    private String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private String DB_USER = "postgres";
-    private String DB_PASSWORD = "postgres";
-
-    private PreparedStatement preparedStatement;
-    private Connection dbConnection;
-
-    private ProductCategoryDaoJDBC(){
-        try {
-            dbConnection = getConnection();
-        } catch (SQLException e){
-            e.getStackTrace();
-        }
-    }
+    private ProductCategoryDaoJDBC(){}
 
     public static ProductCategoryDaoJDBC getInstance(){
         if (instance == null) {
@@ -73,16 +60,7 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
     }
 
     public void remove(int id){
-
-        String removeFromTable = "DELETE FROM ProductCategory WHERE id = ?;";
-        try {
-            preparedStatement = dbConnection.prepareStatement(removeFromTable);
-            preparedStatement.setInt(1,id);
-            preparedStatement.executeQuery();
-        } catch (Exception e){
-            e.getStackTrace();
-        }
-
+        remove(id, "ProductCategory");
     }
 
     public List<ProductCategory> getAll(){
@@ -107,14 +85,6 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
             e.printStackTrace();
         }
         return productCategoryList;
-    }
-
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(
-                DATABASE,
-                DB_USER,
-                DB_PASSWORD);
     }
 }
 
