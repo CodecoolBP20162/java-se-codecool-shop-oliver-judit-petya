@@ -1,7 +1,5 @@
 package com.codecool.shop.model;
 
-import java.text.MessageFormat;
-
 public class LineItem {
 
     public Product product;
