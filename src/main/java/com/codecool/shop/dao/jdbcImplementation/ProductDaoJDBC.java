@@ -1,4 +1,4 @@
-package com.codecool.shop.dao.implementation;
+package com.codecool.shop.dao.jdbcImplementation;
 
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Product;
@@ -9,27 +9,15 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDaoJDBC implements ProductDao {
+public class ProductDaoJDBC extends JDBCAbstractClass implements ProductDao {
 
 
     private static ProductDaoJDBC instance = null;
 
-    private String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private String DB_USER = "petya";
-    private String DB_PASSWORD = "petya";
-    private SupplierDaoJdbc supplierDaoJdbc = SupplierDaoJdbc.getInstance();
+    private SupplierDaoJDBC supplierDaoJdbc = SupplierDaoJDBC.getInstance();
     private ProductCategoryDaoJDBC productCategoryDaoJdbc = ProductCategoryDaoJDBC.getInstance();
 
-    private PreparedStatement preparedStatement;
-    private Connection dbConnection;
-
-    private ProductDaoJDBC() {
-        try {
-            dbConnection = getConnection();
-        } catch (SQLException e) {
-            e.getStackTrace();
-        }
-    }
+    private ProductDaoJDBC() {}
 
     public static ProductDaoJDBC getInstance() {
         if (instance == null) {
@@ -83,14 +71,7 @@ public class ProductDaoJDBC implements ProductDao {
     }
 
     public void remove(int id) {
-        String removeFromTable = "DELETE FROM Product WHERE id = ?;";
-        try {
-            preparedStatement = dbConnection.prepareStatement(removeFromTable);
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeQuery();
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
+        remove(id, "Product");
     }
 
     public List<Product> getAll() {
@@ -177,13 +158,6 @@ public class ProductDaoJDBC implements ProductDao {
             e.printStackTrace();
         }
         return productList;
-    }
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(
-                DATABASE,
-                DB_USER,
-                DB_PASSWORD);
     }
 }
 

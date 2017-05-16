@@ -1,4 +1,4 @@
-package com.codecool.shop.dao.implementation;
+package com.codecool.shop.dao.jdbcImplementation;
 
 
 import com.codecool.shop.dao.SupplierDao;
@@ -8,28 +8,15 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierDaoJdbc implements SupplierDao{
+public class SupplierDaoJDBC extends JDBCAbstractClass implements SupplierDao{
 
-    private static SupplierDaoJdbc instance = null;
+    private static SupplierDaoJDBC instance = null;
 
-    private String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private String DB_USER = "petya";
-    private String DB_PASSWORD = "petya";
+    private SupplierDaoJDBC(){}
 
-    private PreparedStatement preparedStatement;
-    private Connection dbConnection;
-
-    private SupplierDaoJdbc(){
-        try {
-            dbConnection = getConnection();
-        } catch (SQLException e){
-            e.getStackTrace();
-        }
-    }
-
-    public static SupplierDaoJdbc getInstance(){
+    public static SupplierDaoJDBC getInstance(){
         if (instance == null) {
-            instance = new SupplierDaoJdbc();
+            instance = new SupplierDaoJDBC();
         }
         return instance;
     }
@@ -48,7 +35,6 @@ public class SupplierDaoJdbc implements SupplierDao{
     }
 
     public Supplier find(int id){
-
 
         String query = "SELECT * FROM Supplier WHERE id = ?;";
         try {
@@ -72,15 +58,7 @@ public class SupplierDaoJdbc implements SupplierDao{
     }
 
     public void remove(int id){
-        String removeFromTable = "DELETE FROM supplier WHERE id = ?;";
-        try {
-            preparedStatement = dbConnection.prepareStatement(removeFromTable);
-            preparedStatement.setInt(1,id);
-            preparedStatement.executeQuery();
-        } catch (Exception e){
-            e.getStackTrace();
-        }
-
+        remove(id, "Supplier");
     }
 
     public List<Supplier> getAll(){
@@ -103,12 +81,5 @@ public class SupplierDaoJdbc implements SupplierDao{
             e.printStackTrace();
         }
         return supplierList;
-    }
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(
-                DATABASE,
-                DB_USER,
-                DB_PASSWORD);
     }
 }

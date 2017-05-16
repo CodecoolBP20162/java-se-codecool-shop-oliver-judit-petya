@@ -1,4 +1,4 @@
-package com.codecool.shop.dao.implementation;
+package com.codecool.shop.dao.jdbcImplementation;
 
 import java.io.FileInputStream;
 import java.io.IOException;

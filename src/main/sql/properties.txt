@@ -1,3 +1,0 @@
-database=jdbc:postgresql://localhost:5432/codecoolshop
-username=petya
-password=petya
