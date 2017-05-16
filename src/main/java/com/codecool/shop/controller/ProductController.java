@@ -54,7 +54,6 @@ public class ProductController {
     public static ModelAndView renderShoppingCart(Request req, Response res) {
         Order cart = OrderController.findCurrentOrder(req);
         List<LineItem> cartItems = cart.getItems();
-
         Map params = new HashMap<>();
         params.put("cartItems", cartItems);
         params.put("sumTotalPrice", cart.sumTotalPrice());
@@ -64,32 +63,31 @@ public class ProductController {
 
     public static ModelAndView renderEditCart(Request req, Response res) {
         Order cart = OrderController.findCurrentOrder(req);
+        String itemID = req.queryParams("cart-id");
         List<LineItem> cartItems = cart.getItems();
-        for(LineItem cartItem : cartItems){
-            if (Integer.toString(cartItem.getId()).equals(req.queryParams("cart-id"))){
-                cartItem.quantity = Integer.parseInt(req.queryParams("cart-quantity"));
-                // cart.addLineItem(cartItem);
-                cart.updateOrderPrice(cartItem);
-                cart.updateOrderQuantity(cartItem);
-            };
-        };
+        int inputQuantity = Integer.parseInt(req.queryParams("cart-quantity"));
+        for (LineItem cartItem : cartItems){
+            if (itemID.equals(Integer.toString(cartItem.getId()))) {
+                if (inputQuantity == 0) {
+                    cart.deleteItem(cartItem);
+                } else {
+                    cart.addLineItem(cartItem);
+                    cartItem.quantity = inputQuantity;
+                    cartItem.setTotalPrice();
+                }
+            }
+        }
         Map params = new HashMap<>();
         params.put("cartItems", cartItems);
         params.put("sumTotalPrice", cart.sumTotalPrice());
-        return renderShoppingCart(req, res);
+        return new ModelAndView(params, "product/shopping_cart");
     }
 
     public static ModelAndView renderDeleteItem(Request req, Response res) {
-        String itemID = req.params(":id");
         Order cart = OrderController.findCurrentOrder(req);
         List<LineItem> cartItems = cart.getItems();
-        for (LineItem cartItem : cartItems) {
-            //System.out.println(cartItem.getId());
-            if (itemID.equals(Integer.toString(cartItem.getId()))){
-                cart.deleteItem(cartItem);
-            }
-        }
-
+        String itemID = req.params(":id");
+        cartItems.removeIf(n -> itemID.equals(Integer.toString(n.getId())));
         Map params = new HashMap<>();
         params.put("cartItems", cartItems);
         params.put("sumTotalPrice", cart.sumTotalPrice());
