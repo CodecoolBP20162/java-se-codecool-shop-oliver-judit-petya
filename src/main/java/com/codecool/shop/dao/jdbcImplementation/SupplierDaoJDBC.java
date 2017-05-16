@@ -58,7 +58,7 @@ public class SupplierDaoJDBC extends JDBCAbstractClass implements SupplierDao{
     }
 
     public void remove(int id){
-        remove(id, "supplier");
+        remove(id, "Supplier");
     }
 
     public List<Supplier> getAll(){

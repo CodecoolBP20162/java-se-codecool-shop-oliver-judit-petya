@@ -71,7 +71,7 @@ public class ProductDaoJDBC extends JDBCAbstractClass implements ProductDao {
     }
 
     public void remove(int id) {
-        remove(id, "product");
+        remove(id, "Product");
     }
 
     public List<Product> getAll() {

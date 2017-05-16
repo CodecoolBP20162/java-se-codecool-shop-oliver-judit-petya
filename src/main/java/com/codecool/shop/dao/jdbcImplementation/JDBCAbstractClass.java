@@ -37,17 +37,24 @@ abstract class JDBCAbstractClass {
     }
 
     public void remove(int id, String table){
+        String removeFromTable = "";
+        switch (table) {
+            case "Product": removeFromTable = "DELETE FROM product WHERE id = ?;";
+            break;
 
-        String removeFromTable = "DELETE FROM ? WHERE id = ?;";
+            case "ProductCategory": removeFromTable = "DELETE FROM productcategory WHERE id = ?;";
+            break;
+
+            case "Supplier": removeFromTable = "DELETE FROM supplier WHERE id = ?;";
+            break;
+        }
         try {
             preparedStatement = dbConnection.prepareStatement(removeFromTable);
-            preparedStatement.setString(1, table);
-            preparedStatement.setInt(2, id);
+            preparedStatement.setInt(1, id);
             preparedStatement.executeQuery();
         } catch (Exception e){
             e.getStackTrace();
         }
-
     }
 
 
