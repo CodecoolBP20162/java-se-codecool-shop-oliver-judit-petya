@@ -15,9 +15,9 @@ public class ProductDaoJDBC implements ProductDao {
     private static ProductDaoJDBC instance = null;
 
     private String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private String DB_USER = "petya";
-    private String DB_PASSWORD = "petya";
-    private SupplierDaoJdbc supplierDaoJdbc = SupplierDaoJdbc.getInstance();
+    private String DB_USER = "postgres";
+    private String DB_PASSWORD = "postgres";
+    private SupplierDaoJDBC supplierDaoJdbc = SupplierDaoJDBC.getInstance();
     private ProductCategoryDaoJDBC productCategoryDaoJdbc = ProductCategoryDaoJDBC.getInstance();
 
     private PreparedStatement preparedStatement;

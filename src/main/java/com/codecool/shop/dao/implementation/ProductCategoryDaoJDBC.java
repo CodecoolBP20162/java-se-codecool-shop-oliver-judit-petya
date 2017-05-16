@@ -12,8 +12,8 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
     private static ProductCategoryDaoJDBC instance = null;
 
     private String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private String DB_USER = "petya";
-    private String DB_PASSWORD = "petya";
+    private String DB_USER = "postgres";
+    private String DB_PASSWORD = "postgres";
 
     private PreparedStatement preparedStatement;
     private Connection dbConnection;

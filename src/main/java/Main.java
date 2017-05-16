@@ -11,8 +11,6 @@ import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
-import java.sql.SQLException;
-
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
@@ -26,7 +24,7 @@ public class Main {
         port(8888);
 
         // populate some data for the memory storage
-        populateData();
+//        populateData();
 
         post("/add_to_cart", OrderController::addToCart);
 
@@ -50,36 +48,19 @@ public class Main {
         enableDebugScreen();
     }
 
+/*  All example data for the DAOmems are located here.
+
     public static void populateData(){
 
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
-        SupplierDao supplierJdbc = SupplierDaoJdbc.getInstance();
-        ProductCategoryDao productCategoryJdbc = ProductCategoryDaoJDBC.getInstance();
-
-        ProductDao productJdbc = ProductDaoJDBC.getInstance();
-
-
 
         //setting up a new supplier
         Supplier amazon = new Supplier("Amazon", "Digital content and services");
         supplierDataStore.add(amazon);
         Supplier lenovo = new Supplier("Lenovo", "Computers");
         supplierDataStore.add(lenovo);
-
-        //SUPPLIER TABLE TESTS: please run init_db first, then delete /* and */
-
-        supplierJdbc.add(amazon);
-        supplierJdbc.add(lenovo);
-        System.out.println(supplierJdbc.find(1));
-        System.out.println(supplierJdbc.find(2));
-        System.out.println("All supplier in DB:\n" + supplierJdbc.getAll());
-        System.out.println("Remove Lenovo supplier from DB...");
-        supplierJdbc.remove(2);
-        System.out.println("All supplier in DB after remove Lenovo category:\n" + supplierJdbc.getAll());
-        System.out.println("______________________________________________________");
-
 
         //setting up a new product category
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
@@ -90,40 +71,13 @@ public class Main {
         ProductCategory notebook = new ProductCategory("Notebook", "Hardware", "Like a tablet but with keyboard");
         productCategoryDataStore.add(notebook);
 
-        //PRODUCT CATEGORY TABLE TESTS: please run init_db first,then delete /* and */
-
-        productCategoryJdbc.add(tablet);
-        productCategoryJdbc.add(phone);
-        productCategoryJdbc.add(notebook);
-        System.out.println(productCategoryJdbc.find(1));
-        System.out.println(productCategoryJdbc.find(2));
-        System.out.println(productCategoryJdbc.find(3));
-        System.out.println("All product category in DB:\n" + productCategoryJdbc.getAll());
-        System.out.println("Remove Notebook category from DB...");
-        productCategoryJdbc.remove(3);
-        System.out.println("All product category in DB after remove Notebook category:\n" + productCategoryJdbc.getAll());
-
-
-        //PRODUCT TABLE TESTS: please run init_db first,then delete /* and */
-        System.out.println("______________________________________________________");
-        Product dummy_product = new Product("Super Telephone 3000", 90, "USD", "The best telephone on the planet.", productCategoryJdbc.find(1), supplierJdbc.find(1));
-        Product dummy_product2 = new Product("Another Telephone", 50, "USD", "The second best telephone on the planet.", productCategoryJdbc.find(2), supplierJdbc.find(1));
-        productJdbc.add(dummy_product);
-        productJdbc.add(dummy_product2);
-        System.out.println("Find the first product" + productJdbc.find(1));
-        System.out.println("All products from the DB:\n" + productJdbc.getAll());
-        System.out.println("All products by the supplier with ID:1\n" + productJdbc.getBy(supplierJdbc.find(1)));
-        System.out.println("All products by the product category with ID:2\n" + productJdbc.getBy(productCategoryJdbc.find(2)));
-        System.out.println("Now remove first product...");
-        System.out.println("All products from the DB:\n" + productJdbc.getAll());
-
         //setting up products and printing it
         productDataStore.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
         productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
         productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
         productDataStore.add(new Product("Super Telephone 3000", 90, "USD", "The best telephone on the planet.", phone, lenovo));
 
-    }
+    }*/
 
 
 }

@@ -8,18 +8,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierDaoJdbc implements SupplierDao{
+public class SupplierDaoJDBC implements SupplierDao{
 
-    private static SupplierDaoJdbc instance = null;
+    private static SupplierDaoJDBC instance = null;
 
     private String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private String DB_USER = "petya";
-    private String DB_PASSWORD = "petya";
+    private String DB_USER = "postgres";
+    private String DB_PASSWORD = "postgres";
 
     private PreparedStatement preparedStatement;
     private Connection dbConnection;
 
-    private SupplierDaoJdbc(){
+    private SupplierDaoJDBC(){
         try {
             dbConnection = getConnection();
         } catch (SQLException e){
@@ -27,9 +27,9 @@ public class SupplierDaoJdbc implements SupplierDao{
         }
     }
 
-    public static SupplierDaoJdbc getInstance(){
+    public static SupplierDaoJDBC getInstance(){
         if (instance == null) {
-            instance = new SupplierDaoJdbc();
+            instance = new SupplierDaoJDBC();
         }
         return instance;
     }
@@ -48,7 +48,6 @@ public class SupplierDaoJdbc implements SupplierDao{
     }
 
     public Supplier find(int id){
-
 
         String query = "SELECT * FROM Supplier WHERE id = ?;";
         try {
@@ -80,7 +79,6 @@ public class SupplierDaoJdbc implements SupplierDao{
         } catch (Exception e){
             e.getStackTrace();
         }
-
     }
 
     public List<Supplier> getAll(){
