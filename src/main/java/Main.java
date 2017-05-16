@@ -53,6 +53,8 @@ public class Main {
         enableDebugScreen();
     }
 
+
+//Checklist for test cases / DaoMem usage
 //    public static void populateData(){
 //
 //        ProductDao productDataStore = ProductDaoMem.getInstance();
@@ -128,6 +130,6 @@ public class Main {
 //        productDataStore.add(new Product("Super Telephone 3000", 90, "USD", "The best telephone on the planet.", phone, lenovo));
 //
 //    }
-//
+
 
 }

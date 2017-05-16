@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 abstract class JDBCAbstractClass {
 
@@ -17,12 +18,13 @@ abstract class JDBCAbstractClass {
     String DB_PASSWORD;
     PreparedStatement preparedStatement;
     Connection dbConnection;
+    private static ArrayList<String> dbProps = JDBCReadDataFromProps.connectProps();
 
     public JDBCAbstractClass(){
         try {
-            DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-            DB_USER = "postgres";
-            DB_PASSWORD = "postgres";
+            DATABASE = dbProps.get(0);
+            DB_USER = dbProps.get(1);
+            DB_PASSWORD = dbProps.get(2);
             dbConnection = getConnection();
         } catch (SQLException e){
             e.getStackTrace();
