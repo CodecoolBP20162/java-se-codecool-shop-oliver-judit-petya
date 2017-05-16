@@ -1,8 +1,7 @@
 $(document).ready(function(){
-
-    $("#appendedInputButtons").bind("keyup mouseup", function(){
-        var productId = $("#appendedInputButtons").attr("name");
-        var productQuantity = $("#appendedInputButtons").val();
+    $('[id="appendedInputButtons"]').on("keyup mouseup", function(){
+        var productId = $(this).attr("name");
+        var productQuantity = $(this).val();
         var link = "/editcart";
         $.ajax({
             url: link,
@@ -10,7 +9,6 @@ $(document).ready(function(){
             data: {"cart-id": productId, "cart-quantity": productQuantity},
             datatype: "html",
             success: function() {
-                $("#smallQuantity").val(productQuantity);
             }
         });
     });
