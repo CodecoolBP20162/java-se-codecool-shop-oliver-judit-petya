@@ -2,6 +2,7 @@ package com.codecool.shop.dao;
 
 import com.codecool.shop.dao.memImplementation.SupplierDaoMem;
 import com.codecool.shop.model.Supplier;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -12,21 +13,36 @@ import static org.junit.jupiter.api.Assertions.*;
 class SupplierDaoTest {
 
     static SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
-    static Supplier amazon = new Supplier("Amazon", "Digital content and services");
+
+    @BeforeEach
+    public void setup(){
+        List<Integer> ids = new ArrayList<>();
+        for (Supplier supplier: supplierDataStore.getAll()) {
+            ids.add(supplier.getId());
+        }
+        for (Integer id: ids){
+            supplierDataStore.remove(id);
+        }
+    }
 
     @Test
     public void testAdd_AddNewSupplier_SupplierAddedToMem(){
+        Supplier amazon = new Supplier("Amazon", "Digital content and services");
         supplierDataStore.add(amazon);
         assertEquals(amazon, supplierDataStore.getAll().get(0));
     }
 
     @Test
     public void testFind_FindSupplier_ReturnSupplierWithId(){
+        Supplier amazon = new Supplier("Amazon", "Digital content and services");
+        supplierDataStore.add(amazon);
         assertEquals(amazon, supplierDataStore.find(1));
     }
 
     @Test
     public void testRemove_RemoveSupplier_SupplierRemovedFromMem(){
+        Supplier amazon = new Supplier("Amazon", "Digital content and services");
+        supplierDataStore.add(amazon);
         supplierDataStore.remove(1);
         assertEquals(0, supplierDataStore.getAll().size());
     }
@@ -49,6 +65,7 @@ class SupplierDaoTest {
 
     @Test
     public void testGetAll_GetAllIfSuppliersInList_ReturnSuppliersList(){
+        Supplier amazon = new Supplier("Amazon", "Digital content and services");
         List<Supplier> suppliers = new ArrayList<>();
         suppliers.add(amazon);
         supplierDataStore.add(amazon);
