@@ -1,5 +1,7 @@
 package com.codecool.shop.model;
 
+import java.text.MessageFormat;
+
 public class LineItem {
 
     public Product product;
@@ -31,4 +33,13 @@ public class LineItem {
     }
 
     public int getId() { return this.product.id; }
+
+    public String getDescription() {
+        String description = this.product.description;
+        return description;
+    }
+
+    public void setTotalPrice() {
+        this.totalPrice = quantity * product.getDefaultPrice();
+    }
 }
