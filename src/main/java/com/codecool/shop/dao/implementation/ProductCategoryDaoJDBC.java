@@ -10,10 +10,10 @@ import java.util.List;
 public class ProductCategoryDaoJDBC implements ProductCategoryDao {
 
     private static ProductCategoryDaoJDBC instance = null;
-
-    private String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private String DB_USER = "petya";
-    private String DB_PASSWORD = "petya";
+    private static ArrayList<String> dbProps = JDBCReadDataFromProps.connectProps();
+    private String DATABASE = dbProps.get(0);
+    private String DB_USER = dbProps.get(1);
+    private String DB_PASSWORD = dbProps.get(2);
 
     private PreparedStatement preparedStatement;
     private Connection dbConnection;
