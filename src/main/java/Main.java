@@ -22,6 +22,11 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 public class Main {
 
     public static void main(String[] args){
+ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+ Supplier amazon = new Supplier("Amazon", "Digital content and services");
+
+Product dummy_product = new Product("Super Telephone 3000", 90, "USD", "The best telephone on the planet.", tablet, );
+
 
         // default server settings
         exception(Exception.class, (e, req, res) -> e.printStackTrace());

@@ -26,4 +26,17 @@ public class LineItem {
     public float getTotalPrice() {
         return totalPrice;
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public static boolean equals(LineItem lineItemOne, LineItem lineItemTwo){
+        if (lineItemOne.getProduct() == lineItemTwo.getProduct() &&
+                lineItemOne.getTotalPrice() == lineItemTwo.getTotalPrice()
+                ){
+            return true;
+        }
+        return false;
+    }
 }

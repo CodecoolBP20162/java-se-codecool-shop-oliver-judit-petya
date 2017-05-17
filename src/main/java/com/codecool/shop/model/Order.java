@@ -54,4 +54,14 @@ public class Order {
     public void setId(int id) {
         this.id = id;
     }
+
+
+    public static boolean equals(Order orderOne,  Order orderTwo){
+        if (orderOne.getId() == orderTwo.getId() &&
+                orderOne.getItems() == orderTwo.getItems()
+                ){
+            return true;
+        }
+        return false;
+    }
 }

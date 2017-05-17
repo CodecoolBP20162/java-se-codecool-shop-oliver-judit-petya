@@ -75,4 +75,14 @@ public class Product extends BaseModel {
                 this.productCategory.getName(),
                 this.supplier.getName());
     }
+
+    public static boolean equals(Product productOne, Product productTwo){
+        if (productOne.getId() == productTwo.getId() &&
+                productOne.getName() == productTwo.getName()){
+            return true;
+        }
+        return false;
+    }
+
+
 }

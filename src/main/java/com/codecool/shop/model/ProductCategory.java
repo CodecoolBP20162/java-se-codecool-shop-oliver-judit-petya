@@ -43,4 +43,13 @@ public class ProductCategory extends BaseModel {
                 this.department,
                 this.description);
     }
+
+    public static boolean equals(ProductCategory productCategoryOne, ProductCategory productCategoryTwo){
+        if (productCategoryOne.getId() == productCategoryTwo.getId() &&
+                productCategoryOne.getName() == productCategoryTwo.getName()
+                ){
+            return true;
+        }
+        return false;
+    }
 }
