@@ -1,10 +1,6 @@
 package com.codecool.shop.dao.jdbcImplementation;
 
 
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -20,13 +16,13 @@ abstract class JDBCAbstractClass {
     Connection dbConnection;
     private static ArrayList<String> dbProps = JDBCReadDataFromProps.connectProps();
 
-    public JDBCAbstractClass(){
+    public JDBCAbstractClass() {
         try {
             DATABASE = dbProps.get(0);
             DB_USER = dbProps.get(1);
             DB_PASSWORD = dbProps.get(2);
             dbConnection = getConnection();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.getStackTrace();
         }
     }
@@ -38,26 +34,43 @@ abstract class JDBCAbstractClass {
                 DB_PASSWORD);
     }
 
-    public void remove(int id, String table){
+    public void remove(int id, String table) {
         String removeFromTable = "";
         switch (table) {
-            case "Product": removeFromTable = "DELETE FROM product WHERE id = ?;";
-            break;
+            case "Product":
+                removeFromTable = "DELETE FROM product WHERE id = ?;";
+                break;
 
-            case "ProductCategory": removeFromTable = "DELETE FROM productcategory WHERE id = ?;";
-            break;
+            case "ProductCategory":
+                removeFromTable = "DELETE FROM productcategory WHERE id = ?;";
+                break;
 
-            case "Supplier": removeFromTable = "DELETE FROM supplier WHERE id = ?;";
-            break;
+            case "Supplier":
+                removeFromTable = "DELETE FROM supplier WHERE id = ?;";
+                break;
         }
         try {
             preparedStatement = dbConnection.prepareStatement(removeFromTable);
             preparedStatement.setInt(1, id);
             preparedStatement.executeQuery();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.getStackTrace();
         }
     }
 
+    public void removeAll(String table) {
 
+        String removeRecords = "DELETE FROM ?;";
+
+        try {
+            preparedStatement = dbConnection.prepareStatement(removeRecords);
+            preparedStatement.setString(1, table);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
+
+
+

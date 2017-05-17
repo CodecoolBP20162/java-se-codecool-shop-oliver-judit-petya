@@ -4,24 +4,26 @@ package com.codecool.shop.dao.jdbcImplementation;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Supplier;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierDaoJDBC extends JDBCAbstractClass implements SupplierDao{
+public class SupplierDaoJDBC extends JDBCAbstractClass implements SupplierDao {
 
     private static SupplierDaoJDBC instance = null;
 
-    private SupplierDaoJDBC(){}
+    private SupplierDaoJDBC() {
+    }
 
-    public static SupplierDaoJDBC getInstance(){
+    public static SupplierDaoJDBC getInstance() {
         if (instance == null) {
             instance = new SupplierDaoJDBC();
         }
         return instance;
     }
 
-    public void add(Supplier supplier){
+    public void add(Supplier supplier) {
         String insertIntoTable = "INSERT INTO Supplier (name, description) VALUES (?,?);";
         try {
             // Adding record to DB
@@ -34,16 +36,16 @@ public class SupplierDaoJDBC extends JDBCAbstractClass implements SupplierDao{
             String findSupplier = "SELECT id FROM Supplier ORDER BY id DESC LIMIT 1;";
             preparedStatement = dbConnection.prepareStatement(findSupplier);
             ResultSet result = preparedStatement.executeQuery();
-            if (result.next()){
+            if (result.next()) {
                 supplier.setId(result.getInt("id"));
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
 
-    public Supplier find(int id){
+    public Supplier find(int id) {
 
         String query = "SELECT * FROM Supplier WHERE id = ?;";
         try {
@@ -51,36 +53,26 @@ public class SupplierDaoJDBC extends JDBCAbstractClass implements SupplierDao{
                     ResultSet.TYPE_FORWARD_ONLY,
                     ResultSet.CONCUR_READ_ONLY,
                     ResultSet.CLOSE_CURSORS_AT_COMMIT);
-            preparedStatement.setInt(1,id);
+            preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
-            if(result.next()) {
+            if (result.next()) {
                 Supplier supplier = new Supplier(
-                        result.getString    ("name"),
-                        result.getString    ("description"));
+                        result.getString("name"),
+                        result.getString("description"));
                 supplier.setId(result.getInt("id"));
                 return supplier;
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public void remove(int id){
+    public void remove(int id) {
         remove(id, "Supplier");
     }
 
-    public void removeAll(){
-        try {
-            String removeRecords = "DELETE FROM Supplier;";
-            preparedStatement = dbConnection.prepareStatement(removeRecords);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
-
-    public List<Supplier> getAll(){
+    public List<Supplier> getAll() {
         String query = "SELECT * FROM supplier";
         List<Supplier> supplierList = new ArrayList<>();
         try {
@@ -89,16 +81,20 @@ public class SupplierDaoJDBC extends JDBCAbstractClass implements SupplierDao{
                     ResultSet.CONCUR_READ_ONLY,
                     ResultSet.CLOSE_CURSORS_AT_COMMIT);
             ResultSet result = preparedStatement.executeQuery();
-            while(result.next()) {
+            while (result.next()) {
                 Supplier supplier = new Supplier(
-                        result.getString    ("name"),
-                        result.getString    ("description"));
+                        result.getString("name"),
+                        result.getString("description"));
                 supplier.setId(result.getInt("id"));
                 supplierList.add(supplier);
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return supplierList;
+    }
+
+    public void removeAll() {
+        removeAll("Supplier");
     }
 }

@@ -1,66 +1,71 @@
 package com.codecool.shop.dao;
 
+import com.codecool.shop.dao.jdbcImplementation.ProductCategoryDaoJDBC;
 import com.codecool.shop.dao.memImplementation.ProductCategoryDaoMem;
 import com.codecool.shop.model.ProductCategory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductCategoryDaoTest {
 
-    static ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+    static ProductCategoryDao productCategoryDataStoreMem = ProductCategoryDaoMem.getInstance();
+    static ProductCategoryDao productCategoryDataStoreJdbc = ProductCategoryDaoJDBC.getInstance();
+
+    static Stream<ProductCategoryDao> daoProvider() {
+        return Stream.of(productCategoryDataStoreJdbc, productCategoryDataStoreMem);
+    }
 
     @BeforeEach
     public void setup(){
-        List<Integer> ids = new ArrayList<>();
-        for (ProductCategory productCategory: productCategoryDataStore.getAll()) {
-            ids.add(productCategory.getId());
+        daoProvider().forEach(ProductCategoryDao::removeAll);
         }
-        for (Integer id: ids){
-            productCategoryDataStore.remove(id);
-        }
+
+    @ParameterizedTest
+    @MethodSource(names = "daoProvider")
+    public void testAdd_AddNewProductCategory_ProductCategoryAdded(ProductCategoryDao dao){
+        ProductCategory tablet = new ProductCategory("Tablet", "Hardware","A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+        dao.add(tablet);
+        assertEquals(tablet, dao.getAll().get(dao.getAll().size() - 1));
     }
 
-    @Test
-    public void testAdd_AddNewSupplier_ProductCategoryAddedToMem(){
+    @ParameterizedTest
+    @MethodSource(names="daoProvider")
+    public void testFind_FindProductCategory_ReturnProductCategoryWithId(ProductCategoryDao dao){
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware","A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
-        productCategoryDataStore.add(tablet);
-        assertEquals(tablet, productCategoryDataStore.getAll().get(0));
-    }
-
-    @Test
-    public void testFind_FindSupplier_ReturnProductCategoryWithId(){
-        ProductCategory tablet = new ProductCategory("Tablet", "Hardware","A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
-        productCategoryDataStore.add(tablet);
-        assertEquals(tablet, productCategoryDataStore.find(1));
+        dao.add(tablet);
+        assertEquals(tablet, dao.find(tablet.getId()));
     }
 
     @Test
     public void testRemove_RemoveProductCategory_ProductCAtegoryRemovedFromMem(){
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware","A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
-        productCategoryDataStore.add(tablet);
-        productCategoryDataStore.remove(1);
-        assertEquals(0, productCategoryDataStore.getAll().size());
+        productCategoryDataStoreMem.add(tablet);
+        productCategoryDataStoreMem.remove(1);
+        assertEquals(0, productCategoryDataStoreMem.getAll().size());
     }
 
     @Test
     public void testFind_FindSupplierIfNoProductCategory_ReturnNull(){
-        assertEquals(null, productCategoryDataStore.find(1));
+        assertEquals(null, productCategoryDataStoreMem.find(1));
     }
 
     @Test
     public void testRemove_RemoveProductCategoryIfThereIsNone_ProgramContinuesRunning(){
-        productCategoryDataStore.remove(1);
+        productCategoryDataStoreMem.remove(1);
     }
 
     @Test
     public void testGetAll_GetAllIfNothingInList_ReturnEmptyList(){
         List<ProductCategory> productCategories = new ArrayList<>();
-        assertEquals(productCategories, productCategoryDataStore.getAll());
+        assertEquals(productCategories, productCategoryDataStoreMem.getAll());
     }
 
     @Test
@@ -68,8 +73,8 @@ class ProductCategoryDaoTest {
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware","A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         List<ProductCategory> suppliers = new ArrayList<>();
         suppliers.add(tablet);
-        productCategoryDataStore.add(tablet);
-        assertEquals(suppliers, productCategoryDataStore.getAll());
+        productCategoryDataStoreMem.add(tablet);
+        assertEquals(suppliers, productCategoryDataStoreMem.getAll());
     }
 
 

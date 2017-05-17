@@ -29,7 +29,7 @@ public class ProductCategoryDaoJDBC extends JDBCAbstractClass implements Product
             preparedStatement.setString(2, productCategory.getDescription());
             preparedStatement.setString(3, productCategory.getDepartment());
 
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
         } catch (SQLException e){
             e.getStackTrace();
         }
