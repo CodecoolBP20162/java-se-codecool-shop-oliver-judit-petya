@@ -44,7 +44,7 @@ class SupplierDaoTest {
     public void testFind_FindSupplier_ReturnSupplierWithId(SupplierDao dao){
         Supplier amazon = new Supplier("Amazon", "Digital content and services");
         dao.add(amazon);
-        assertEquals(amazon, dao.find(1));
+        assertEquals(amazon, dao.find(amazon.getId()));
     }
 
 //    @Test

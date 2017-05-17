@@ -72,7 +72,7 @@ public class SupplierDaoJDBC extends JDBCAbstractClass implements SupplierDao{
 
     public void removeAll(){
         try {
-            String removeRecords = "TRUNCATE Supplier CASCADE";
+            String removeRecords = "DELETE FROM Supplier;";
             preparedStatement = dbConnection.prepareStatement(removeRecords);
             preparedStatement.executeUpdate();
         } catch (SQLException e){
