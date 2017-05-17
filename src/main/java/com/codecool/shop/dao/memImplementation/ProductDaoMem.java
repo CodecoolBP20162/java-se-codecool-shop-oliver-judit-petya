@@ -43,6 +43,10 @@ public class ProductDaoMem implements ProductDao {
         DATA.remove(find(id));
     }
 
+    public void removeAll(){
+        DATA.clear();
+    }
+
     @Override
     public List<Product> getAll() {
         return DATA;

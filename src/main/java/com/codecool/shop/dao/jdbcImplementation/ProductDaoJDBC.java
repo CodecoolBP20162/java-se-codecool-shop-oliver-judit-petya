@@ -30,6 +30,7 @@ public class ProductDaoJDBC extends JDBCAbstractClass implements ProductDao {
 
         String insertIntoTable = "INSERT INTO product (name, description, currency, default_price, supplier_id, product_category_id) VALUES (?,?,?,?,?,?);";
         try {
+            // Add record to DB
             preparedStatement = dbConnection.prepareStatement(insertIntoTable);
             preparedStatement.setString(1, product.getName());
             preparedStatement.setString(2, product.getDescription());
@@ -37,7 +38,15 @@ public class ProductDaoJDBC extends JDBCAbstractClass implements ProductDao {
             preparedStatement.setFloat(4, product.getDefaultPrice());
             preparedStatement.setInt(5, product.getSupplier().getId());
             preparedStatement.setInt(6, product.getProductCategory().getId());
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
+
+            // Get the ID of the most recent record and update our supplier
+            String findProduct = "SELECT id FROM Product ORDER BY id DESC LIMIT 1;";
+            preparedStatement = dbConnection.prepareStatement(findProduct);
+            ResultSet result = preparedStatement.executeQuery();
+            if (result.next()){
+                product.setId(result.getInt("id"));
+            }
         } catch (SQLException e) {
             e.getStackTrace();
         }
@@ -72,6 +81,16 @@ public class ProductDaoJDBC extends JDBCAbstractClass implements ProductDao {
 
     public void remove(int id) {
         remove(id, "Product");
+    }
+
+    public void removeAll(){
+        try {
+            String removeRecords = "DELETE FROM Product;";
+            preparedStatement = dbConnection.prepareStatement(removeRecords);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public List<Product> getAll() {

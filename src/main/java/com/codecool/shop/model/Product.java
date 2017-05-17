@@ -76,9 +76,14 @@ public class Product extends BaseModel {
                 this.supplier.getName());
     }
 
-    public static boolean equals(Product productOne, Product productTwo){
-        if (productOne.getId() == productTwo.getId() &&
-                productOne.getName() == productTwo.getName()){
+    @Override
+    public boolean equals(Object other){
+        if (other == null) return false;
+        if (!(other instanceof Product))return false;
+        Product otherProduct = (Product)other;
+        if (this.getId() == otherProduct.getId() &&
+                this.getName().equals(otherProduct.getName())
+                ){
             return true;
         }
         return false;
