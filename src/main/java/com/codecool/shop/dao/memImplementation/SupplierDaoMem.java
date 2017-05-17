@@ -3,6 +3,7 @@ package com.codecool.shop.dao.memImplementation;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Supplier;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,10 @@ public class SupplierDaoMem implements SupplierDao {
     @Override
     public void remove(int id) {
         DATA.remove(find(id));
+    }
+
+    public void removeAll(){
+        DATA.clear();
     }
 
     @Override
