@@ -47,38 +47,43 @@ class SupplierDaoTest {
         assertEquals(amazon, dao.find(amazon.getId()));
     }
 
-//    @Test
-//    public void testRemove_RemoveSupplier_SupplierRemovedFromMem(){
-//        Supplier amazon = new Supplier("Amazon", "Digital content and services");
-//        supplierDataStore.add(amazon);
-//        supplierDataStore.remove(1);
-//        assertEquals(0, supplierDataStore.getAll().size());
-//    }
-//
-//    @Test
-//    public void testFind_FindSupplierIfNoSupplier_ReturnNull(){
-//        assertEquals(null, supplierDataStore.find(1));
-//    }
-//
-//    @Test
-//    public void testRemove_RemoveSupplierIfThereIsNone_ProgramContinuesRunning(){
-//        supplierDataStore.remove(1);
-//    }
-//
-//    @Test
-//    public void testGetAll_GetAllIfNothingInList_ReturnEmptyList(){
-//        List<Supplier> suppliers = new ArrayList<>();
-//        assertEquals(suppliers, supplierDataStore.getAll());
-//    }
-//
-//    @Test
-//    public void testGetAll_GetAllIfSuppliersInList_ReturnSuppliersList(){
-//        Supplier amazon = new Supplier("Amazon", "Digital content and services");
-//        List<Supplier> suppliers = new ArrayList<>();
-//        suppliers.add(amazon);
-//        supplierDataStore.add(amazon);
-//        assertEquals(suppliers, supplierDataStore.getAll());
-//    }
+    @ParameterizedTest
+    @MethodSource(names = "daoProvider")
+    public void testRemove_RemoveSupplier_SupplierRemovedFromMem(SupplierDao dao){
+        Supplier amazon = new Supplier("Amazon", "Digital content and services");
+        dao.add(amazon);
+        dao.remove(amazon.getId());
+        assertEquals(0, dao.getAll().size());
+    }
+
+    @ParameterizedTest
+    @MethodSource(names = "daoProvider")
+    public void testFind_FindSupplierIfNoSupplier_ReturnNull(SupplierDao dao){
+        assertEquals(null, dao.find(1));
+    }
+
+    @ParameterizedTest
+    @MethodSource(names = "daoProvider")
+    public void testRemove_RemoveSupplierIfThereIsNone_ProgramContinuesRunning(SupplierDao dao){
+        dao.remove(1);
+    }
+
+    @ParameterizedTest
+    @MethodSource(names = "daoProvider")
+    public void testGetAll_GetAllIfNothingInList_ReturnEmptyList(SupplierDao dao){
+        List<Supplier> suppliers = new ArrayList<>();
+        assertEquals(suppliers, dao.getAll());
+    }
+
+    @ParameterizedTest
+    @MethodSource(names = "daoProvider")
+    public void testGetAll_GetAllIfSuppliersInList_ReturnSuppliersList(SupplierDao dao){
+        Supplier amazon = new Supplier("Amazon", "Digital content and services");
+        List<Supplier> suppliers = new ArrayList<>();
+        suppliers.add(amazon);
+        dao.add(amazon);
+        assertEquals(suppliers, dao.getAll());
+    }
 
 
 }
