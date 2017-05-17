@@ -36,4 +36,13 @@ public class Supplier extends BaseModel {
                 this.description
         );
     }
+
+    public static boolean equals(Supplier supplierOne, Supplier supplierTwo){
+        if (supplierOne.getId() == supplierTwo.getId() &&
+                supplierOne.getName() == supplierTwo.getName()
+                ){
+            return true;
+        }
+        return false;
+    }
 }
