@@ -6,6 +6,7 @@ $(document).ready(function(){
         var productPrice = productPriceID.attr("name");
         var productTotalPrice = Number(productPrice) * Number(productQuantity);
         var link = "/editcart";
+        var sum = 0;
         $.ajax({
             url: link,
             type: "POST",
@@ -13,6 +14,11 @@ $(document).ready(function(){
             datatype: "html",
             success: function() {
                 productPriceID.html(String(productTotalPrice)+" USD");
+                $('.productTotal').each(function() {
+                     var productTotalPriceNumber = Number($(this).html().replace(" USD", ""));
+                     sum += productTotalPriceNumber;
+                });
+                $('#allTotal').html(String(sum)+" USD");
             }
         });
     });
