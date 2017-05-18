@@ -1,14 +1,5 @@
 import com.codecool.shop.controller.OrderController;
 import com.codecool.shop.controller.ProductController;
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.Supplier;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -19,14 +10,13 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 public class Main {
 
     public static void main(String[] args) {
-
         // default server settings
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         staticFileLocation("/public");
         port(8888);
 
         // populate some data for the memory storage
-        populateData();
+//        populateData();
 
         post("/add_to_cart", OrderController::addToCart);
 
@@ -50,7 +40,7 @@ public class Main {
         enableDebugScreen();
     }
 
-    public static void populateData() {
+/*    public static void populateData(){
 
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
@@ -77,7 +67,7 @@ public class Main {
         productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
         productDataStore.add(new Product("Super Telephone 3000", 90, "USD", "The best telephone on the planet.", phone, lenovo));
 
-    }
+    } */
 
 
 }

@@ -11,6 +11,15 @@ public class Order {
     private int orderQuantity;
     private int id;
 
+    public static boolean equals(Order orderOne, Order orderTwo) {
+        if (orderOne.getId() == orderTwo.getId() &&
+                orderOne.getItems() == orderTwo.getItems()
+                ) {
+            return true;
+        }
+        return false;
+    }
+
     public void addLineItem(LineItem item) {
         int counter = 0;
         for (LineItem n : items) {
