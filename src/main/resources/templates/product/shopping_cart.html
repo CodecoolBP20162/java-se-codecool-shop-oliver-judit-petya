@@ -59,7 +59,7 @@
                                 <div class="input-append"><input th:value="${item.getQuantity()}" th:name="${item.getId()}" min="0" type="number" class="span1" style="max-width:34px" placeholder="0" id="appendedInputButtons" size="16"/><a th:href="@{~/delete_item/{path}(path=${item.id})}"><button class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button></a></div>
                             </td>
                             <td th:text="${item.product.getDefaultPrice()}+' USD'"></td>
-                            <td th:text="${item.getTotalPrice()}+' USD'" th:name="${item.product.getDefaultPrice()}" th:id="${item.getId()}" style="text-align:right"></td>
+                            <td class="productTotal" th:text="${item.getTotalPrice()}+' USD'" th:name="${item.product.getDefaultPrice()}" th:id="${item.getId()}" style="text-align:right"></td>
                         </tr>
                     </div>
                     <tr>
