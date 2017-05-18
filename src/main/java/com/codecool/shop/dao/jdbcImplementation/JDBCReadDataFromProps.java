@@ -25,7 +25,6 @@ public class JDBCReadDataFromProps {
             proplist.add(prop.getProperty("database"));
             proplist.add(prop.getProperty("username"));
             proplist.add(prop.getProperty("password"));
-            System.out.println(proplist);
 
             return proplist;
 
