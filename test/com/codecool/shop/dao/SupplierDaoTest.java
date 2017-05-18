@@ -49,7 +49,7 @@ class SupplierDaoTest {
 
     @ParameterizedTest
     @MethodSource(names = "daoProvider")
-    public void testRemove_RemoveSupplier_SupplierRemovedFromMem(SupplierDao dao){
+    public void testRemove_RemoveSupplier_SupplierRemoved(SupplierDao dao){
         Supplier amazon = new Supplier("Amazon", "Digital content and services");
         dao.add(amazon);
         dao.remove(amazon.getId());
@@ -84,6 +84,5 @@ class SupplierDaoTest {
         dao.add(amazon);
         assertEquals(suppliers, dao.getAll());
     }
-
 
 }

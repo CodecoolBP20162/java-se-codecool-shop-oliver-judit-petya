@@ -44,39 +44,42 @@ class ProductCategoryDaoTest {
         assertEquals(tablet, dao.find(tablet.getId()));
     }
 
-    @Test
-    public void testRemove_RemoveProductCategory_ProductCAtegoryRemovedFromMem(){
+    @ParameterizedTest
+    @MethodSource(names="daoProvider")
+    public void testRemove_RemoveProductCategory_ProductCAtegoryRemoved(ProductCategoryDao dao){
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware","A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
-        productCategoryDataStoreMem.add(tablet);
-        productCategoryDataStoreMem.remove(1);
-        assertEquals(0, productCategoryDataStoreMem.getAll().size());
+        dao.add(tablet);
+        dao.remove(tablet.getId());
+        assertEquals(0, dao.getAll().size());
     }
 
-    @Test
-    public void testFind_FindSupplierIfNoProductCategory_ReturnNull(){
-        assertEquals(null, productCategoryDataStoreMem.find(1));
+    @ParameterizedTest
+    @MethodSource(names = "daoProvider")
+    public void testFind_FindProductCategoryIfNoProductCategory_ReturnNull(ProductCategoryDao dao){
+        assertEquals(null, dao.find(1));
     }
 
-    @Test
-    public void testRemove_RemoveProductCategoryIfThereIsNone_ProgramContinuesRunning(){
-        productCategoryDataStoreMem.remove(1);
+    @ParameterizedTest
+    @MethodSource(names = "daoProvider")
+    public void testRemove_RemoveProductCategoryIfThereIsNone_ProgramContinuesRunning(ProductCategoryDao dao){
+        dao.remove(1);
     }
 
-    @Test
-    public void testGetAll_GetAllIfNothingInList_ReturnEmptyList(){
+    @ParameterizedTest
+    @MethodSource(names = "daoProvider")
+    public void testGetAll_GetAllIfNothingInList_ReturnEmptyList(ProductCategoryDao dao){
         List<ProductCategory> productCategories = new ArrayList<>();
-        assertEquals(productCategories, productCategoryDataStoreMem.getAll());
+        assertEquals(productCategories, dao.getAll());
     }
 
-    @Test
-    public void testGetAll_GetAllIfProductCategoryInList_ReturnProductCategoriesList(){
+    @ParameterizedTest
+    @MethodSource(names = "daoProvider")
+    public void testGetAll_GetAllIfProductCategoryInList_ReturnProductCategoriesList(ProductCategoryDao dao){
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware","A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         List<ProductCategory> suppliers = new ArrayList<>();
         suppliers.add(tablet);
-        productCategoryDataStoreMem.add(tablet);
-        assertEquals(suppliers, productCategoryDataStoreMem.getAll());
+        dao.add(tablet);
+        assertEquals(suppliers, dao.getAll());
     }
-
-
 
 }

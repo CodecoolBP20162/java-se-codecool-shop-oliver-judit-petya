@@ -44,4 +44,9 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
     public List<ProductCategory> getAll() {
         return DATA;
     }
+
+    public void removeAll(){
+        DATA.clear();
+    }
+
 }

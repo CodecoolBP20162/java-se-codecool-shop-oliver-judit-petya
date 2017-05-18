@@ -57,19 +57,6 @@ abstract class JDBCAbstractClass {
             e.getStackTrace();
         }
     }
-
-    public void removeAll(String table) {
-
-        String removeRecords = "DELETE FROM ?;";
-
-        try {
-            preparedStatement = dbConnection.prepareStatement(removeRecords);
-            preparedStatement.setString(1, table);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }
 
 

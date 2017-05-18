@@ -28,8 +28,15 @@ public class ProductCategoryDaoJDBC extends JDBCAbstractClass implements Product
             preparedStatement.setString(1, productCategory.getName());
             preparedStatement.setString(2, productCategory.getDescription());
             preparedStatement.setString(3, productCategory.getDepartment());
-
             preparedStatement.executeUpdate();
+
+            // Get the ID of the most recent record and update our supplier
+            String findProductCategory = "SELECT id FROM ProductCategory ORDER BY id DESC LIMIT 1;";
+            preparedStatement = dbConnection.prepareStatement(findProductCategory);
+            ResultSet result = preparedStatement.executeQuery();
+            if (result.next()) {
+                productCategory.setId(result.getInt("id"));
+            }
         } catch (SQLException e){
             e.getStackTrace();
         }
@@ -86,6 +93,19 @@ public class ProductCategoryDaoJDBC extends JDBCAbstractClass implements Product
         }
         return productCategoryList;
     }
+
+    public void removeAll() {
+
+        String removeRecords = "DELETE FROM productcategory;";
+
+        try {
+            preparedStatement = dbConnection.prepareStatement(removeRecords);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 

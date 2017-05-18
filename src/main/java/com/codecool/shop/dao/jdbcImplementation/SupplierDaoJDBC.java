@@ -95,6 +95,6 @@ public class SupplierDaoJDBC extends JDBCAbstractClass implements SupplierDao {
     }
 
     public void removeAll() {
-        removeAll("Supplier");
+        assert true;
     }
 }
