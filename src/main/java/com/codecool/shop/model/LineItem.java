@@ -19,11 +19,24 @@ public class LineItem {
         this.totalPrice = quantity * product.getDefaultPrice();
     }
 
+    public static boolean equals(LineItem lineItemOne, LineItem lineItemTwo) {
+        if (lineItemOne.getProduct() == lineItemTwo.getProduct() &&
+                lineItemOne.getTotalPrice() == lineItemTwo.getTotalPrice()
+                ) {
+            return true;
+        }
+        return false;
+    }
+
     public int getQuantity() {
         return quantity;
     }
 
     public float getTotalPrice() {
         return totalPrice;
+    }
+
+    public Product getProduct() {
+        return product;
     }
 }

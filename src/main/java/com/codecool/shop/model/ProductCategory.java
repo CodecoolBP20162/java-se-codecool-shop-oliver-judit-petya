@@ -7,7 +7,7 @@ public class ProductCategory extends BaseModel {
     private ArrayList<Product> products;
 
     public ProductCategory(String name, String department, String description) {
-        super(name);
+        super(name, description);
         this.department = department;
         this.products = new ArrayList<>();
     }
@@ -42,5 +42,18 @@ public class ProductCategory extends BaseModel {
                 this.name,
                 this.department,
                 this.description);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        if (!(other instanceof ProductCategory)) return false;
+        ProductCategory otherProductCategory = (ProductCategory) other;
+        if (this.getId() == otherProductCategory.getId() &&
+                this.getName().equals(otherProductCategory.getName())
+                ) {
+            return true;
+        }
+        return false;
     }
 }
