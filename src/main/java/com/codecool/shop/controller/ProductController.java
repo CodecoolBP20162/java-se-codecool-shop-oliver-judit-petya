@@ -4,6 +4,9 @@ import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.jdbcImplementation.ProductCategoryDaoJDBC;
+import com.codecool.shop.dao.jdbcImplementation.ProductDaoJDBC;
+import com.codecool.shop.dao.jdbcImplementation.SupplierDaoJDBC;
 import com.codecool.shop.dao.memImplementation.OrderDaoMem;
 import com.codecool.shop.dao.memImplementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.memImplementation.ProductDaoMem;
@@ -16,10 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProductController {
-    private static SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
-    private static ProductDao productDataStore = ProductDaoMem.getInstance();
-    private static ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-    private static OrderDao order = OrderDaoMem.getInstance();
+    private static SupplierDao productSupplierDataStore = SupplierDaoJDBC.getInstance();
+    private static ProductDao productDataStore = ProductDaoJDBC.getInstance();
+    private static ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJDBC.getInstance();
 
     public static ModelAndView renderProducts(Request req, Response res) {
         req.session(true);

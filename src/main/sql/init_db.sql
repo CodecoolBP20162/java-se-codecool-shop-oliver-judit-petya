@@ -51,7 +51,7 @@ INSERT INTO Product (name, description, currency, default_price, supplier_id, pr
                              FROM ProductCategory
                              WHERE name = 'Tablet'));
 INSERT INTO Product (name, description, currency, default_price, supplier_id, product_category_id) VALUES
-  ('Super Telephone 3000',
+  ('Super Telephone Lenovo 3000',
    'Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.', 'USD', 90,
    (SELECT id
     FROM Supplier
