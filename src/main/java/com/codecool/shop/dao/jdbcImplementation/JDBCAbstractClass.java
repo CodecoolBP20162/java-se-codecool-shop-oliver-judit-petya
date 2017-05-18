@@ -9,12 +9,12 @@ import java.util.ArrayList;
 
 abstract class JDBCAbstractClass {
 
+    private static ArrayList<String> dbProps = JDBCReadDataFromProps.connectProps();
     String DATABASE;
     String DB_USER;
     String DB_PASSWORD;
     PreparedStatement preparedStatement;
     Connection dbConnection;
-    private static ArrayList<String> dbProps = JDBCReadDataFromProps.connectProps();
 
     public JDBCAbstractClass() {
         try {

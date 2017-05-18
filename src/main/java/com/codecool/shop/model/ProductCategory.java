@@ -45,13 +45,13 @@ public class ProductCategory extends BaseModel {
     }
 
     @Override
-    public boolean equals(Object other){
+    public boolean equals(Object other) {
         if (other == null) return false;
-        if (!(other instanceof ProductCategory))return false;
-        ProductCategory otherProductCategory = (ProductCategory)other;
+        if (!(other instanceof ProductCategory)) return false;
+        ProductCategory otherProductCategory = (ProductCategory) other;
         if (this.getId() == otherProductCategory.getId() &&
                 this.getName().equals(otherProductCategory.getName())
-                ){
+                ) {
             return true;
         }
         return false;
