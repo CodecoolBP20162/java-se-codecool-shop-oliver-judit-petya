@@ -1,16 +1,11 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.jdbcImplementation.ProductCategoryDaoJDBC;
 import com.codecool.shop.dao.jdbcImplementation.ProductDaoJDBC;
 import com.codecool.shop.dao.jdbcImplementation.SupplierDaoJDBC;
-import com.codecool.shop.dao.memImplementation.OrderDaoMem;
-import com.codecool.shop.dao.memImplementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.memImplementation.ProductDaoMem;
-import com.codecool.shop.dao.memImplementation.SupplierDaoMem;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
