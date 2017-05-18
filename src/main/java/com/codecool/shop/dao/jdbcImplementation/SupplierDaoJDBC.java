@@ -1,6 +1,5 @@
 package com.codecool.shop.dao.jdbcImplementation;
 
-
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Supplier;
 
@@ -9,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierDaoJDBC extends JDBCAbstractClass implements SupplierDao {
+public class SupplierDaoJDBC extends JDBCAbstract implements SupplierDao {
 
     private static SupplierDaoJDBC instance = null;
 
@@ -46,7 +45,6 @@ public class SupplierDaoJDBC extends JDBCAbstractClass implements SupplierDao {
     }
 
     public Supplier find(int id) {
-
         String query = "SELECT * FROM Supplier WHERE id = ?;";
         try {
             preparedStatement = dbConnection.prepareStatement(query,
@@ -55,6 +53,7 @@ public class SupplierDaoJDBC extends JDBCAbstractClass implements SupplierDao {
                     ResultSet.CLOSE_CURSORS_AT_COMMIT);
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
+
             if (result.next()) {
                 Supplier supplier = new Supplier(
                         result.getString("name"),

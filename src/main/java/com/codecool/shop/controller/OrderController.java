@@ -2,7 +2,6 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.jdbcImplementation.ProductDaoJDBC;
 import com.codecool.shop.dao.memImplementation.OrderDaoMem;
-import com.codecool.shop.dao.memImplementation.ProductDaoMem;
 import com.codecool.shop.model.LineItem;
 import com.codecool.shop.model.Order;
 import org.json.simple.JSONObject;

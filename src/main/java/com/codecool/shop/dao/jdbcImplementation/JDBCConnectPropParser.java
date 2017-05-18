@@ -6,18 +6,18 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public class JDBCReadDataFromProps {
+public class JDBCConnectPropParser {
 
     public static ArrayList<String> connectProps() {
-
         Properties prop = new Properties();
         InputStream input = null;
         ArrayList<String> proplist = new ArrayList<>();
-
+        //if you want to connect to live DB use this line 20th: input = new FileInputStream(pathToLiveDB);
+        String pathToLiveDB = "src/main/sql/properties.txt";
+        //if you want to connect to live DB use this line 20th: input = new FileInputStream(pathToTestDB);
+        String pathToTestDB = "test/testResources/test_properties.txt";
         try {
-            //If you want to connect to the test database use this path: test/testResources/test_properties.txt;
-            // For deployed database use this path: src/main/sql/properties.txt
-            input = new FileInputStream("src/main/sql/properties.txt");
+            input = new FileInputStream(pathToTestDB);
 
             // load a properties file
             prop.load(input);
@@ -42,5 +42,4 @@ public class JDBCReadDataFromProps {
         }
         return null;
     }
-
 }

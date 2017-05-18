@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDaoJDBC extends JDBCAbstractClass implements ProductDao {
+public class ProductDaoJDBC extends JDBCAbstract implements ProductDao {
 
 
     private static ProductDaoJDBC instance = null;
@@ -29,7 +29,6 @@ public class ProductDaoJDBC extends JDBCAbstractClass implements ProductDao {
     }
 
     public void add(Product product) {
-
         String insertIntoTable = "INSERT INTO product (name, description, currency, default_price, supplier_id, product_category_id) VALUES (?,?,?,?,?,?);";
         try {
             // Add record to DB
