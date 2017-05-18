@@ -69,8 +69,8 @@ public class ProductDaoJDBC extends JDBCAbstractClass implements ProductDao {
                         result.getFloat("default_price"),
                         result.getString("currency"),
                         result.getString("description"),
-                        productCategoryDaoJdbc.find(result.getInt("supplier_id")),
-                        supplierDaoJdbc.find(result.getInt("product_category_id"))
+                        productCategoryDaoJdbc.find(result.getInt("product_category_id")),
+                        supplierDaoJdbc.find(result.getInt("supplier_id"))
                 );
                 product.setId(result.getInt("id"));
                 return product;
@@ -87,7 +87,7 @@ public class ProductDaoJDBC extends JDBCAbstractClass implements ProductDao {
 
     public void removeAll() {
         try {
-            String removeRecords = "DELETE FROM Product;";
+            String removeRecords = "TRUNCATE Product CASCADE;";
             preparedStatement = dbConnection.prepareStatement(removeRecords);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

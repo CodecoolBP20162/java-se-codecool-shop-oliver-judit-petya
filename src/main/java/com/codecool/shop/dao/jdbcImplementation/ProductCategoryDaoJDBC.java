@@ -98,8 +98,7 @@ public class ProductCategoryDaoJDBC extends JDBCAbstractClass implements Product
 
     public void removeAll() {
 
-        String removeRecords = "DELETE FROM productcategory;";
-
+        String removeRecords = "TRUNCATE productcategory CASCADE;";
         try {
             preparedStatement = dbConnection.prepareStatement(removeRecords);
             preparedStatement.execute();

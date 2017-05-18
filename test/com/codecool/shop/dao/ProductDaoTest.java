@@ -56,7 +56,7 @@ class ProductDaoTest {
 
     @ParameterizedTest
     @MethodSource(names = "daoProvider")
-    public void testAdd_AddNewProduct_ProductAddedToMem(ProductDao dao) {
+    public void testAdd_AddNewProduct_ProductAddedToDao(ProductDao dao) {
         Product fire = new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon);
         dao.add(fire);
         assertEquals(fire, dao.getAll().get(dao.getAll().size() - 1));
