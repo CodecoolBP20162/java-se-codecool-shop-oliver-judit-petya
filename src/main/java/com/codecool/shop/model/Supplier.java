@@ -38,13 +38,13 @@ public class Supplier extends BaseModel {
     }
 
     @Override
-    public boolean equals(Object other){
+    public boolean equals(Object other) {
         if (other == null) return false;
-        if (!(other instanceof Supplier))return false;
-        Supplier otherSupplier = (Supplier)other;
+        if (!(other instanceof Supplier)) return false;
+        Supplier otherSupplier = (Supplier) other;
         if (this.getId() == otherSupplier.getId() &&
                 this.getName().equals(otherSupplier.getName())
-                ){
+                ) {
             return true;
         }
         return false;

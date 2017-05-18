@@ -3,24 +3,26 @@ package com.codecool.shop.dao.jdbcImplementation;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.ProductCategory;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductCategoryDaoJDBC extends JDBCAbstractClass implements ProductCategoryDao{
+public class ProductCategoryDaoJDBC extends JDBCAbstractClass implements ProductCategoryDao {
 
     private static ProductCategoryDaoJDBC instance = null;
 
-    private ProductCategoryDaoJDBC(){}
+    private ProductCategoryDaoJDBC() {
+    }
 
-    public static ProductCategoryDaoJDBC getInstance(){
+    public static ProductCategoryDaoJDBC getInstance() {
         if (instance == null) {
             instance = new ProductCategoryDaoJDBC();
         }
         return instance;
     }
 
-    public void add(ProductCategory productCategory){
+    public void add(ProductCategory productCategory) {
 
         String insertIntoTable = "INSERT INTO productcategory (name, description, department) VALUES (?,?,?);";
         try {
@@ -37,12 +39,12 @@ public class ProductCategoryDaoJDBC extends JDBCAbstractClass implements Product
             if (result.next()) {
                 productCategory.setId(result.getInt("id"));
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.getStackTrace();
         }
     }
 
-    public ProductCategory find(int id){
+    public ProductCategory find(int id) {
 
         String query = "SELECT * FROM ProductCategory WHERE id = ?;";
         try {
@@ -50,27 +52,27 @@ public class ProductCategoryDaoJDBC extends JDBCAbstractClass implements Product
                     ResultSet.TYPE_FORWARD_ONLY,
                     ResultSet.CONCUR_READ_ONLY,
                     ResultSet.CLOSE_CURSORS_AT_COMMIT);
-            preparedStatement.setInt(1,id);
+            preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
-            if(result.next()) {
+            if (result.next()) {
                 ProductCategory productCategory = new ProductCategory(
-                result.getString    ("name"),
-                result.getString    ("description"),
-                result.getString("department"));
+                        result.getString("name"),
+                        result.getString("description"),
+                        result.getString("department"));
                 productCategory.setId(result.getInt("id"));
                 return productCategory;
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public void remove(int id){
+    public void remove(int id) {
         remove(id, "ProductCategory");
     }
 
-    public List<ProductCategory> getAll(){
+    public List<ProductCategory> getAll() {
 
         String query = "SELECT * FROM ProductCategory";
         List<ProductCategory> productCategoryList = new ArrayList<>();
@@ -80,15 +82,15 @@ public class ProductCategoryDaoJDBC extends JDBCAbstractClass implements Product
                     ResultSet.CONCUR_READ_ONLY,
                     ResultSet.CLOSE_CURSORS_AT_COMMIT);
             ResultSet result = preparedStatement.executeQuery();
-            while(result.next()) {
+            while (result.next()) {
                 ProductCategory productCategory = new ProductCategory(
-                        result.getString    ("name"),
-                        result.getString    ("description"),
+                        result.getString("name"),
+                        result.getString("description"),
                         result.getString("department"));
                 productCategory.setId(result.getInt("id"));
                 productCategoryList.add(productCategory);
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return productCategoryList;

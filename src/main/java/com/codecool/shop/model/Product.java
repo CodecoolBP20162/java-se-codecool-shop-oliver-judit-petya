@@ -77,13 +77,13 @@ public class Product extends BaseModel {
     }
 
     @Override
-    public boolean equals(Object other){
+    public boolean equals(Object other) {
         if (other == null) return false;
-        if (!(other instanceof Product))return false;
-        Product otherProduct = (Product)other;
+        if (!(other instanceof Product)) return false;
+        Product otherProduct = (Product) other;
         if (this.getId() == otherProduct.getId() &&
                 this.getName().equals(otherProduct.getName())
-                ){
+                ) {
             return true;
         }
         return false;

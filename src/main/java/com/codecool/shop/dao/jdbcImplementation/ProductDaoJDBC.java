@@ -5,7 +5,8 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,8 @@ public class ProductDaoJDBC extends JDBCAbstractClass implements ProductDao {
     private SupplierDaoJDBC supplierDaoJdbc = SupplierDaoJDBC.getInstance();
     private ProductCategoryDaoJDBC productCategoryDaoJdbc = ProductCategoryDaoJDBC.getInstance();
 
-    private ProductDaoJDBC() {}
+    private ProductDaoJDBC() {
+    }
 
     public static ProductDaoJDBC getInstance() {
         if (instance == null) {
@@ -44,7 +46,7 @@ public class ProductDaoJDBC extends JDBCAbstractClass implements ProductDao {
             String findProduct = "SELECT id FROM Product ORDER BY id DESC LIMIT 1;";
             preparedStatement = dbConnection.prepareStatement(findProduct);
             ResultSet result = preparedStatement.executeQuery();
-            if (result.next()){
+            if (result.next()) {
                 product.setId(result.getInt("id"));
             }
         } catch (SQLException e) {
@@ -83,12 +85,12 @@ public class ProductDaoJDBC extends JDBCAbstractClass implements ProductDao {
         remove(id, "Product");
     }
 
-    public void removeAll(){
+    public void removeAll() {
         try {
             String removeRecords = "DELETE FROM Product;";
             preparedStatement = dbConnection.prepareStatement(removeRecords);
             preparedStatement.executeUpdate();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

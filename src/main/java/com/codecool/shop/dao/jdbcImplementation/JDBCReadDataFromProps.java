@@ -15,8 +15,9 @@ public class JDBCReadDataFromProps {
         ArrayList<String> proplist = new ArrayList<>();
 
         try {
-            //If you want to connect to the test database use this path: test/testResources/test_properties.txt
-            input = new FileInputStream("src/main/sql/properties.txt");
+            //If you want to connect to the test database use this path: test/testResources/test_properties.txt;
+            // For deployed database use this path: src/main/sql/properties.txt
+            input = new FileInputStream("test/testResources/test_properties.txt");
 
             // load a properties file
             prop.load(input);

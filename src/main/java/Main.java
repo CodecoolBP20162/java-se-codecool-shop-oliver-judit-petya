@@ -1,17 +1,5 @@
 import com.codecool.shop.controller.OrderController;
 import com.codecool.shop.controller.ProductController;
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.jdbcImplementation.ProductCategoryDaoJDBC;
-import com.codecool.shop.dao.jdbcImplementation.ProductDaoJDBC;
-import com.codecool.shop.dao.jdbcImplementation.SupplierDaoJDBC;
-import com.codecool.shop.dao.memImplementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.memImplementation.ProductDaoMem;
-import com.codecool.shop.dao.memImplementation.SupplierDaoMem;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.Supplier;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -21,7 +9,7 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         // default server settings
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         staticFileLocation("/public");
