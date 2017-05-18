@@ -1,21 +1,18 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.jdbcImplementation.ProductCategoryDaoJDBC;
 import com.codecool.shop.dao.jdbcImplementation.ProductDaoJDBC;
 import com.codecool.shop.dao.jdbcImplementation.SupplierDaoJDBC;
-import com.codecool.shop.dao.memImplementation.OrderDaoMem;
-import com.codecool.shop.dao.memImplementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.memImplementation.ProductDaoMem;
-import com.codecool.shop.dao.memImplementation.SupplierDaoMem;
+import com.codecool.shop.model.*;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ProductController {
@@ -49,5 +46,49 @@ public class ProductController {
         params.put("categories", productCategoryDataStore.getAll());
         params.put("suppliers", productSupplierDataStore.getAll());
         return params;
+    }
+
+    public static ModelAndView renderShoppingCart(Request req, Response res) {
+        Order cart = OrderController.findCurrentOrder(req);
+        List<LineItem> cartItems = cart.getItems();
+        Map params = new HashMap<>();
+        params.put("cartItems", cartItems);
+        params.put("sumTotalPrice", cart.sumTotalPrice());
+        params.put("orderQuantity", req.session().attribute("orderQuantity"));
+        return new ModelAndView(params, "product/shopping_cart");
+    }
+
+    public static ModelAndView renderEditCart(Request req, Response res) {
+        Order cart = OrderController.findCurrentOrder(req);
+        String itemID = req.queryParams("cart-id");
+        List<LineItem> cartItems = cart.getItems();
+        int inputQuantity = Integer.parseInt(req.queryParams("cart-quantity"));
+        for (LineItem cartItem : cartItems){
+            if (itemID.equals(Integer.toString(cartItem.getId()))) {
+                if (inputQuantity == 0) {
+                    cart.deleteItem(cartItem);
+                } else {
+                    cart.addLineItem(cartItem);
+                    cartItem.quantity = inputQuantity;
+                    cartItem.setTotalPrice();
+                }
+            }
+        }
+        Map params = new HashMap<>();
+        params.put("cartItems", cartItems);
+        params.put("sumTotalPrice", cart.sumTotalPrice());
+        return new ModelAndView(params, "product/shopping_cart");
+    }
+
+    public static ModelAndView renderDeleteItem(Request req, Response res) {
+        Order cart = OrderController.findCurrentOrder(req);
+        List<LineItem> cartItems = cart.getItems();
+        String itemID = req.params(":id");
+        cartItems.removeIf(n -> itemID.equals(Integer.toString(n.getId())));
+        Map params = new HashMap<>();
+        params.put("cartItems", cartItems);
+        params.put("sumTotalPrice", cart.sumTotalPrice());
+        params.put("orderQuantity", req.session().attribute("orderQuantity"));
+        return new ModelAndView(params, "product/shopping_cart");
     }
 }

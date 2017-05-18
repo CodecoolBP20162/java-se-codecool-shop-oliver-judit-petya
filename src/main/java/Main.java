@@ -35,7 +35,17 @@ public class Main {
             return new ThymeleafTemplateEngine().render(ProductController.renderProductsbySupplier(req, res, supplierID));
         });
 
+        get("/cart", (req, res) -> {
+            return new ThymeleafTemplateEngine().render( ProductController.renderShoppingCart(req, res) );
+        });
 
+        post("/editcart", (req, res) -> {
+            return new ThymeleafTemplateEngine().render( ProductController.renderEditCart(req, res) );
+        });
+
+        get("/delete_item/:id", (req, res) -> {
+            return new ThymeleafTemplateEngine().render( ProductController.renderDeleteItem(req, res) );
+        });
         // Add this line to your project to enable the debug screen
         enableDebugScreen();
     }
@@ -66,8 +76,6 @@ public class Main {
         productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
         productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
         productDataStore.add(new Product("Super Telephone 3000", 90, "USD", "The best telephone on the planet.", phone, lenovo));
-
     } */
-
 
 }

@@ -1,6 +1,5 @@
 package com.codecool.shop.model;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,5 +61,15 @@ public class Order {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void deleteItem(LineItem item) {this.items.remove(item);}
+
+    public float sumTotalPrice() {
+        float sum = 0.0f;
+        for (LineItem item : items) {
+            sum += item.totalPrice;
+        }
+        return sum;
     }
 }

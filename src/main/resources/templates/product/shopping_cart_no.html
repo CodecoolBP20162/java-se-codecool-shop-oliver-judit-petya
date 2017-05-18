@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>CodeCool Shopping cart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+</head>
+<body>
+<div id="header">
+    <div class="container">
+        <div id="welcomeLine" class="row">
+            <div class="span6">Welcome!<strong> User</strong></div>
+        </div>
+        <!-- Navbar ================================================== -->
+        <div id="logoArea" class="navbar">
+            <a id="smallScreen" data-target="#topMenu" data-toggle="collapse" class="btn btn-navbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <div class="navbar-inner">
+                <a class="brand" th:href="@{~/}"><img src="/img/new.png"/>CodeCool Shop</a>
+
+                <ul id="topMenu" class="nav pull-right">
+                    <li class=""><a href="contact.html">Contact</a></li>
+                    <li class="">
+                        <a href="#login" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success">Login</span></a>
+                        <div id="login" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false" >
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
+                                <h3>Login Block</h3>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal loginFrm">
+                                    <div class="control-group">
+                                        <input type="text" id="inputEmail" placeholder="Email"/>
+                                    </div>
+                                    <div class="control-group">
+                                        <input type="password" id="inputPassword" placeholder="Password"/>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="checkbox">
+                                            <input type="checkbox"/> Remember me
+                                        </label>
+                                    </div>
+                                </form>
+                                <button type="submit" class="btn btn-success">Sign in</button>
+                                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+<div id="mainBody">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar ================================================== -->
+            <div id="sidebar" class="span3">
+                <div class="well well-small"><a id="myCart" href="product_summary.html"><img src="/img/ico-cart.png" alt="cart"/> Items in your cart  <span th:text="'$ '+${sumTotalPrice}" class="badge badge-warning pull-right"></span></a></div></div>
+            <div class="span9">
+                <ul class="breadcrumb">
+                    <li><a th:href="@{~/}">Home</a> <span class="divider">/</span></li>
+                    <li class="active"> SHOPPING CART</li>
+                </ul>
+                <h3>  SHOPPING CART <a th:href="@{~/}" class="btn btn-large pull-right"><i class="fa fa-chevron-left" aria-hidden="true"></i> Continue Shopping </a></h3>
+                <hr class="soft"/>
+
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Description</th>
+                        <th>Quantity/Update</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div th:each="item:${cartItems}">
+                        <tr>
+                            <td> <img width="60" th:attr="src='/img/product_'+${item.getId()}+'.jpg'" alt=""/></td>
+                            <td th:text="${item.getName()}"></td>
+                            <td>
+                                <div class="input-append"><input th:value="${item.getQuantity()}" th:name="${item.getId()}" min="0" type="number" class="span1" style="max-width:34px" placeholder="0" id="appendedInputButtons" size="16"/><a th:href="@{~/delete_item/{path}(path=${item.id})}"><button class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button></a></div>
+                            </td>
+                            <td th:text="'$ '+${item.product.getDefaultPrice()}"></td>
+                            <td th:text="'$ '+${item.getTotalPrice()}"></td>
+                        </tr>
+                    </div>
+                    <tr>
+                        <td colspan="6" style="text-align:right"><strong>TOTAL =</strong></td>
+                        <td th:text="'$ '+${sumTotalPrice}" class="label label-important" style="display:block"><strong></strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <a th:href="@{~/}" class="btn btn-large"><i class="fa fa-chevron-left" aria-hidden="true"></i> Continue Shopping </a>
+                <a href="login.html" class="btn btn-large pull-right">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+
+            </div>
+        </div></div>
+</div>
+<!-- MainBody End -->
+<!-- Footer  -->
+<div  id="footerSection">
+    <div class="container">
+        <div class="row">
+            <div id="socialMedia" class="span3 pull-right">
+                <h5>SOCIAL MEDIA </h5>
+                <a href="#"><img width="60" height="60" src="/img/facebook.png" title="facebook" alt="facebook"/></a>
+                <a href="#"><img width="60" height="60" src="/img/twitter.png" title="twitter" alt="twitter"/></a>
+                <a href="#"><img width="60" height="60" src="/img/youtube.png" title="youtube" alt="youtube"/></a>
+            </div>
+        </div>
+    </div><!-- Container End -->
+</div>
+<!-- Placed at the end of the document so the pages load faster -->
+<!-- Latest compiled and minified Jquery -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="/js/ShoppingCart.js" type="text/javascript"></script>
+
+</body>
+</html>

@@ -26,7 +26,7 @@ public class OrderController {
         return new LineItem(ProductDaoJDBC.getInstance().find(productIdInt), productQuantityInt);
     }
 
-    private static Order findCurrentOrder(Request req) {
+    public static Order findCurrentOrder(Request req) {
         Order currentOrder = new Order();
         if (!req.session().attributes().contains("orderId")) {
             orderList.add(currentOrder);
