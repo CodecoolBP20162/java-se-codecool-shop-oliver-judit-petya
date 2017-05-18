@@ -14,6 +14,8 @@ public interface ProductDao {
 
     void remove(int id);
 
+    void removeAll();
+
     List<Product> getAll();
 
     List<Product> getBy(Supplier supplier);
