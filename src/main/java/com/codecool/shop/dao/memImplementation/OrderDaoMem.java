@@ -6,7 +6,6 @@ import com.codecool.shop.model.Order;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class OrderDaoMem implements OrderDao {
 
     private static OrderDaoMem instance = null;

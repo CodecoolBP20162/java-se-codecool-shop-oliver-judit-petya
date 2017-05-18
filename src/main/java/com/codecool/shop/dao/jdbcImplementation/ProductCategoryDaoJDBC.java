@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductCategoryDaoJDBC extends JDBCAbstractClass implements ProductCategoryDao {
+public class ProductCategoryDaoJDBC extends JDBCAbstract implements ProductCategoryDao {
 
     private static ProductCategoryDaoJDBC instance = null;
 
@@ -23,8 +23,8 @@ public class ProductCategoryDaoJDBC extends JDBCAbstractClass implements Product
     }
 
     public void add(ProductCategory productCategory) {
-
         String insertIntoTable = "INSERT INTO productcategory (name, description, department) VALUES (?,?,?);";
+
         try {
             preparedStatement = dbConnection.prepareStatement(insertIntoTable);
             preparedStatement.setString(1, productCategory.getName());
@@ -45,8 +45,8 @@ public class ProductCategoryDaoJDBC extends JDBCAbstractClass implements Product
     }
 
     public ProductCategory find(int id) {
-
         String query = "SELECT * FROM ProductCategory WHERE id = ?;";
+
         try {
             preparedStatement = dbConnection.prepareStatement(query,
                     ResultSet.TYPE_FORWARD_ONLY,
@@ -73,9 +73,9 @@ public class ProductCategoryDaoJDBC extends JDBCAbstractClass implements Product
     }
 
     public List<ProductCategory> getAll() {
-
         String query = "SELECT * FROM ProductCategory";
         List<ProductCategory> productCategoryList = new ArrayList<>();
+
         try {
             preparedStatement = dbConnection.prepareStatement(query,
                     ResultSet.TYPE_FORWARD_ONLY,
@@ -97,8 +97,8 @@ public class ProductCategoryDaoJDBC extends JDBCAbstractClass implements Product
     }
 
     public void removeAll() {
-
         String removeRecords = "TRUNCATE productcategory CASCADE;";
+
         try {
             preparedStatement = dbConnection.prepareStatement(removeRecords);
             preparedStatement.execute();

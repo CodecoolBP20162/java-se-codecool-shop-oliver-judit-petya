@@ -7,16 +7,16 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-abstract class JDBCAbstractClass {
+abstract class JDBCAbstract {
 
-    private static ArrayList<String> dbProps = JDBCReadDataFromProps.connectProps();
+    private static ArrayList<String> dbProps = JDBCConnectPropParser.connectProps();
     String DATABASE;
     String DB_USER;
     String DB_PASSWORD;
     PreparedStatement preparedStatement;
     Connection dbConnection;
 
-    public JDBCAbstractClass() {
+    public JDBCAbstract() {
         try {
             DATABASE = dbProps.get(0);
             DB_USER = dbProps.get(1);
